@@ -1,0 +1,42 @@
+﻿<Page x:Class="OOTP.Lab4.Screens.AgreementPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:viewModel="clr-namespace:OOTP.Lab4.ViewModels"
+	  mc:Ignorable="d"
+	  d:DesignHeight="300"
+	  d:DesignWidth="300">
+	<Page.Resources>
+		<viewModel:Agreement_ViewModel x:Key="ViewModel" />
+	</Page.Resources>
+	<Grid x:Name="LayoutRoot"
+		  Background="White"
+		  DataContext="{StaticResource ViewModel}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="200" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<DataGrid Grid.Row="0"
+				  ItemsSource="{Binding Agreements}"
+				  AutoGenerateColumns="False"
+				  IsReadOnly="True">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Title object"
+									Binding="{Binding Date, StringFormat=dd.MM.yy}" />
+			</DataGrid.Columns>
+		</DataGrid>
+		<!--New/Edit agreement-->
+		<StackPanel Grid.Row="1">
+			<StackPanel>
+
+			</StackPanel>
+			<StackPanel>
+
+			</StackPanel>
+			<StackPanel>
+
+			</StackPanel>
+		</StackPanel>
+	</Grid>
+</Page>

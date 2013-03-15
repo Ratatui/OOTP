@@ -1,0 +1,133 @@
+﻿<Page x:Class="OOTP.Lab4.Screens.OrganizationPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:viewmodel="clr-namespace:OOTP.Lab4.ViewModels"
+	  xmlns:converter="clr-namespace:OOTP.Lab4.Converters"
+	  mc:Ignorable="d"
+	  d:DesignHeight="300"
+	  d:DesignWidth="300">
+	<Page.Resources>
+		<viewmodel:Organization_ViewModel x:Key="ViewModel" />
+		<converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+	</Page.Resources>
+	<Grid DataContext="{StaticResource ViewModel}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="200" />
+		</Grid.RowDefinitions>
+		<DataGrid Grid.Row="0"
+				  ItemsSource="{Binding Organizations}"
+				  SelectedItem="{Binding CurrentOrganization}"
+				  AutoGenerateColumns="False"
+				  IsReadOnly="True">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Title"
+									Binding="{Binding Name}" />
+				<DataGridTextColumn Header="Description"
+									Binding="{Binding Description}" />
+				<DataGridTextColumn Header="Address"
+									Binding="{Binding Address}" />
+				<DataGridTextColumn Header="Legal address"
+									Binding="{Binding LegalAddress}" />
+				<DataGridTextColumn Header="Telephone"
+									Binding="{Binding Telephone}" />
+				<DataGridTextColumn Header="Profit ($)"
+									Binding="{Binding Profit}" />
+				<DataGridTextColumn Header="Staff"
+									Binding="{Binding Staff}" />
+				<DataGridTextColumn Header="Total area (m²)"
+									Binding="{Binding TotalArea}" />
+			</DataGrid.Columns>
+		</DataGrid>
+		<StackPanel Grid.Row="1">
+			<ToolBar Height="32">
+				<Button ToolTip="Add new organization"
+						Command="{Binding CreateCommand}">
+					<Image Source="Images\new.png" />
+				</Button>
+				<Button ToolTip="Refresh organizations"
+						Command="{Binding RefreshCommand}">
+					<Image Source="Images\refresh.png" />
+				</Button>
+				<Button ToolTip="Save changes"
+						Command="{Binding SaveCommand}">
+					<Image Source="Images\save.png" />
+				</Button>
+				<Button ToolTip="Delete organization"
+						Command="{Binding DeleteCommand}">
+					<Image Source="Images\delete.png" />
+				</Button>
+			</ToolBar>
+			<StackPanel Visibility="{Binding FallbackValue=Visible, Converter={StaticResource NullToVisibilityConverter}}"
+						DataContext="{Binding CurrentOrganization}">
+				<StackPanel Orientation="Horizontal"
+							Margin="0,0,0,5">
+					<Label Content="Title: "
+						   Width="80"
+						   HorizontalContentAlignment="Right"/>
+					<TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							 Width="200" />
+					<Label Content="Staff: "
+						   Width="100"
+						   HorizontalContentAlignment="Right" />
+					<TextBox Text="{Binding Staff, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							 HorizontalContentAlignment="Right"
+							 Width="125" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal"
+							Margin="0,0,0,5">
+					<Label Content="Description: "
+						   Width="80"
+						   HorizontalContentAlignment="Right" />
+					<TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							 Width="200" />
+					<Label Content="Profit: "
+						   Width="100"
+						   HorizontalContentAlignment="Right" />
+					<TextBox Text="{Binding Profit, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							 HorizontalContentAlignment="Right"
+							 Width="125" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal"
+							Margin="0,0,0,5">
+					<Label Content="Tepelhone: "
+						   Width="80"
+						   HorizontalContentAlignment="Right" />
+					<TextBox Text="{Binding Telephone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							 Width="200" />
+					<Label Content="Total area :"
+						   Width="100"
+						   HorizontalContentAlignment="Right" />
+					<TextBox Text="{Binding TotalArea, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							 HorizontalContentAlignment="Right"
+							 Width="125" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal"
+							Margin="0,0,0,5">
+					<Label Content="Address: "
+						   Width="80"
+						   HorizontalContentAlignment="Right" />
+					<TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							 Width="200"
+							 MinLines="3"
+							 MaxLines="3"
+							 ScrollViewer.VerticalScrollBarVisibility="Auto"
+							 AcceptsReturn="True"
+							 TextWrapping="Wrap" />
+					<Label Content=" Legal address: "
+						   Width="100"
+						   HorizontalContentAlignment="Right" />
+					<TextBox Text="{Binding LegalAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							 Width="200"
+							 MinLines="3"
+							 MaxLines="3"
+							 ScrollViewer.VerticalScrollBarVisibility="Auto"
+							 AcceptsReturn="True"
+							 TextWrapping="Wrap" />
+				</StackPanel>
+			</StackPanel>
+		</StackPanel>
+	</Grid>
+</Page>

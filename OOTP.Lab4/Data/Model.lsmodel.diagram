@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<minimalLanguageDiagram dslVersion="1.1.0.0" absoluteBounds="0, 0, 11, 8.5" name="Model">
+  <modelMoniker name="/Model" />
+  <nestedChildShapes>
+    <entityShape Id="eb8d19f4-4cd2-4441-bdef-7d504578c539" absoluteBounds="3.625, 3.75, 1.5, 2.0484114583333328">
+      <entityMoniker name="/Model/Organization" />
+      <nestedChildShapes>
+        <elementListCompartment Id="902589f8-d9a3-4a97-81d6-89f17cdd696a" absoluteBounds="3.6399999999999997, 4.16, 1.4700000000000002, 1.5384114583333333" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="85a09b58-5cbd-40f7-8300-5cb498cc50f8" absoluteBounds="6.125, 3, 1.5, 2.0484114583333337">
+      <entityMoniker name="/Model/Buyer" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e0bfac14-a4d4-4fa0-9a0c-8e831f743a90" absoluteBounds="6.1400000000000006, 3.41, 1.4700000000000002, 1.5384114583333333" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="67466b84-7539-46db-a125-4dc40699c99a" absoluteBounds="1.375, 2.5, 1.5, 1.2792057291666668">
+      <entityMoniker name="/Model/Controller" />
+      <nestedChildShapes>
+        <elementListCompartment Id="98f549f0-b88f-4ab0-9bf3-60d06d5c5eda" absoluteBounds="1.3899999999999997, 2.91, 1.4700000000000002, 0.76920572916666663" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="01603b00-568b-4e31-afd0-9a8eec437384" absoluteBounds="1.375, 0.75, 1.5, 0.89460286458333371">
+      <entityMoniker name="/Model/Agreement" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b962fe11-510b-4ada-bfbf-4fa33de35508" absoluteBounds="1.3900000000000006, 1.1600000000000001, 1.4700000000000002, 0.38460286458333331" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <oneToManyAssociationConnector edgePoints="[(4.375 : 3.75); (4.375 : 1.19730143229167); (2.875 : 1.19730143229167)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <oneToManyAssociationMoniker Id="67f499fd-3fbf-4455-9926-4f7838c87364" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="eb8d19f4-4cd2-4441-bdef-7d504578c539" />
+        <entityShapeMoniker Id="01603b00-568b-4e31-afd0-9a8eec437384" />
+      </nodes>
+    </oneToManyAssociationConnector>
+    <oneToManyAssociationConnector edgePoints="[(6.875 : 3); (6.875 : 1.4522046484375); (2.875 : 1.4522046484375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <oneToManyAssociationMoniker Id="f274be6b-8ab8-4b24-8536-8911e1a060a7" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="85a09b58-5cbd-40f7-8300-5cb498cc50f8" />
+        <entityShapeMoniker Id="01603b00-568b-4e31-afd0-9a8eec437384" />
+      </nodes>
+    </oneToManyAssociationConnector>
+    <oneToManyAssociationConnector edgePoints="[(2.125 : 2.5); (2.125 : 1.64460286458333)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <oneToManyAssociationMoniker Id="80b590b8-50ea-4535-91d4-8bc6dee71ba5" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="67466b84-7539-46db-a125-4dc40699c99a" />
+        <entityShapeMoniker Id="01603b00-568b-4e31-afd0-9a8eec437384" />
+      </nodes>
+    </oneToManyAssociationConnector>
+  </nestedChildShapes>
+</minimalLanguageDiagram>
