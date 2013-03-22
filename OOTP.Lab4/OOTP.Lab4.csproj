@@ -79,6 +79,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\Converter.cs" />
+    <Compile Include="Data\Agreement.cs" />
     <Compile Include="Data\Buyer.cs" />
     <Compile Include="Data\Controller.cs" />
     <Compile Include="Data\Model.cs">
@@ -96,6 +97,18 @@
     <Compile Include="Screens\ControllerPage.xaml.cs">
       <DependentUpon>ControllerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Screens\Dialog\FilterBuyersDialog.xaml.cs">
+      <DependentUpon>FilterBuyersDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Dialog\FilterOrganizationsDialog.xaml.cs">
+      <DependentUpon>FilterOrganizationsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Dialog\FilterControllersDialog.xaml.cs">
+      <DependentUpon>FilterControllersDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Dialog\FilterAgreementsDialog.xaml.cs">
+      <DependentUpon>FilterAgreementsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Screens\OrganizationPage.xaml.cs">
       <DependentUpon>OrganizationPage.xaml</DependentUpon>
     </Compile>
@@ -103,6 +116,7 @@
     <Compile Include="ViewModels\Agreement_ViewModel.cs" />
     <Compile Include="ViewModels\Buyer_ViewModel.cs" />
     <Compile Include="ViewModels\Contoller_ViewModel.cs" />
+    <Compile Include="ViewModels\Filter_ViewModel.cs" />
     <Compile Include="ViewModels\Organization_ViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Page Include="MainWindow.xaml">
@@ -126,6 +140,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Screens\ControllerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\Dialog\FilterBuyersDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Dialog\FilterOrganizationsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Dialog\FilterControllersDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Dialog\FilterAgreementsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -210,6 +240,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Screens\Images\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Screens\Images\filter.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

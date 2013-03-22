@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace OOTP.Lab4.ViewModels
 {
-	class BasicViewModel : INotifyPropertyChanged 
+	public class BasicViewModel : INotifyPropertyChanged 
 	{
 		protected static readonly LightSpeedContext<ModelUnitOfWork> context = new LightSpeedContext<ModelUnitOfWork>("Default");
 

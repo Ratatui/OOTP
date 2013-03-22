@@ -4,38 +4,121 @@
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:viewModel="clr-namespace:OOTP.Lab4.ViewModels"
+	  xmlns:converter="clr-namespace:OOTP.Lab4.Converters"
 	  mc:Ignorable="d"
 	  d:DesignHeight="300"
 	  d:DesignWidth="300">
 	<Page.Resources>
 		<viewModel:Agreement_ViewModel x:Key="ViewModel" />
+		<converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 	</Page.Resources>
 	<Grid x:Name="LayoutRoot"
 		  Background="White"
 		  DataContext="{StaticResource ViewModel}">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="200" />
 			<RowDefinition Height="*" />
+			<RowDefinition Height="200" />
 		</Grid.RowDefinitions>
 		<DataGrid Grid.Row="0"
 				  ItemsSource="{Binding Agreements}"
+				  SelectedItem="{Binding CurrentAgreement}"
 				  AutoGenerateColumns="False"
 				  IsReadOnly="True">
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="Title object"
+				<DataGridTextColumn Header="Number"
+									Binding="{Binding Number}" />
+				<DataGridTextColumn Header="Date"
 									Binding="{Binding Date, StringFormat=dd.MM.yy}" />
+				<DataGridTextColumn Header="Organization"
+									Binding="{Binding Organization.Name}" />
+				<DataGridTextColumn Header="Controller"
+									Binding="{Binding Controller.Name}" />
+				<DataGridTextColumn Header="Total area"
+									Binding="{Binding Organization.TotalArea}" />
+				<DataGridTextColumn Header="Staff"
+									Binding="{Binding Organization.Staff}" />
+				<DataGridTextColumn Header="Last name"
+									Binding="{Binding Buyer.LastName}" />
+				<DataGridTextColumn Header="Passport"
+									Binding="{Binding Buyer.Passport}" />
+				<DataGridTextColumn Header="Inn"
+									Binding="{Binding Buyer.Inn}" />
 			</DataGrid.Columns>
 		</DataGrid>
-		<!--New/Edit agreement-->
 		<StackPanel Grid.Row="1">
-			<StackPanel>
-
-			</StackPanel>
-			<StackPanel>
-
-			</StackPanel>
-			<StackPanel>
-
+			<ToolBar Height="32">
+				<Button ToolTip="Add new agreement"
+						Command="{Binding CreateCommand}">
+					<Image Source="Images\new.png" />
+				</Button>
+				<Button ToolTip="Refresh agreement"
+						Command="{Binding RefreshCommand}">
+					<Image Source="Images\refresh.png" />
+				</Button>
+				<Button ToolTip="Save changes"
+						Command="{Binding SaveCommand}">
+					<Image Source="Images\save.png" />
+				</Button>
+				<Button ToolTip="Delete agreement"
+						Command="{Binding DeleteCommand}">
+					<Image Source="Images\delete.png" />
+				</Button>
+				<Button ToolTip="Filter agreement"
+						Command="{Binding FilterCommand}">
+					<Image Source="Images\filter.png" />
+				</Button>
+			</ToolBar>
+			<StackPanel DataContext="{Binding CurrentAgreement}"
+						Visibility="{Binding FallbackValue=Collapsed, Converter={StaticResource NullToVisibilityConverter}}">
+				<StackPanel Orientation="Horizontal"
+							Margin="0,0,0,5">
+					<Label Content="Number: "
+						   HorizontalContentAlignment="Right"
+						   Width="85" />
+					<TextBox Text="{Binding Number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							 Width="150" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal"
+							Margin="0,0,0,5">
+					<Label Content="Date: "
+						   HorizontalContentAlignment="Right"
+						   Width="85" />
+					<DatePicker SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+								Width="150" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal"
+							Margin="0,0,0,5">
+					<Label Content="Organization: "
+						   HorizontalContentAlignment="Right"
+						   Width="85" />
+					<ComboBox ItemsSource="{Binding Organizations, Source={StaticResource ViewModel}}"
+							  SelectedValuePath="Id"
+							  SelectedValue="{Binding OrganizationId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							  DisplayMemberPath="Name"
+							  Width="150" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal"
+							Margin="0,0,0,5">
+					<Label Content="Buyer: "
+						   HorizontalContentAlignment="Right"
+						   Width="85" />
+					<ComboBox ItemsSource="{Binding Buyers, Source={StaticResource ViewModel}}"
+							  SelectedValuePath="Id"
+							  SelectedValue="{Binding BuyerId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							  DisplayMemberPath="Passport"
+							  Width="150" />
+				</StackPanel>
+				<StackPanel Orientation="Horizontal"
+							Margin="0,0,0,5">
+					<Label Content="Controller: "
+						   HorizontalContentAlignment="Right"
+						   Width="85" />
+					<ComboBox ItemsSource="{Binding Controllers, Source={StaticResource ViewModel}}"
+							  SelectedValuePath="Id"
+							  SelectedValue="{Binding ControllerId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+							  DisplayMemberPath="Name"
+							  Width="150" />
+				</StackPanel>
 			</StackPanel>
 		</StackPanel>
 	</Grid>

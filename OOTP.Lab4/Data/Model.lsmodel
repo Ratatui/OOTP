@@ -31,6 +31,7 @@
         <entityProperty name="Profit" dataType="Int32" privateSetter="false" />
         <entityProperty name="Staff" dataType="Int32" privateSetter="false" />
         <entityProperty name="TotalArea" dataType="Double" privateSetter="false" />
+        <entityProperty name="IsPrivatized" dataType="Boolean" privateSetter="false" />
       </entityProperties>
       <oneToManyAssociations>
         <oneToManyAssociation Id="67f499fd-3fbf-4455-9926-4f7838c87364" collectionName="Agreements" backreferenceName="Organization" isNullable="false">
@@ -102,7 +103,7 @@
         </entityProperty>
         <entityProperty name="Telephone" isNullable="true" privateSetter="false">
           <validations>
-            <lengthValidation minimumLength="17" maximumLength="17" />
+            <lengthValidation minimumLength="0" maximumLength="17" />
           </validations>
         </entityProperty>
       </entityProperties>

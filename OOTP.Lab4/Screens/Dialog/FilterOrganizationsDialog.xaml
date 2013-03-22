@@ -1,0 +1,146 @@
+﻿<Window x:Class="OOTP.Lab4.Screens.FilterOrganizationsDialog"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		Title="FilterOrganizationsDialog"
+		Height="290"
+		Width="340">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0">
+			<StackPanel Orientation="Horizontal"
+						Margin="0,5,0,5">
+				<Label Content="Number: "
+					   HorizontalContentAlignment="Right"
+					   Width="70" />
+				<TextBox x:Name="NumbertextBox"
+						 Text="{Binding Number}"
+						 ToolTip="Number"
+						 Width="100" />
+				<Label Content="Title: "
+					   HorizontalContentAlignment="Right"
+					   Width="40" />
+				<TextBox x:Name="TitleTextBox"
+						 Text="{Binding Name}"
+						 ToolTip="Title"
+						 Width="100" />
+			</StackPanel>
+			<StackPanel Orientation="Horizontal"
+						Margin="0,0,0,5">
+				<Label Content="Date: "
+					   HorizontalContentAlignment="Right"
+					   Width="70" />
+				<DatePicker x:Name="StartDateDatePicker"
+							Width="100"
+							SelectedDate="{Binding DateStart}" />
+				<Label Content="-"
+					   Width="40"
+					   HorizontalContentAlignment="Center" />
+				<DatePicker  x:Name="EndDateDatePicker"
+							 SelectedDate="{Binding DateEnd}"
+							 Width="100" />
+			</StackPanel>
+			<StackPanel Orientation="Horizontal"
+						Margin="0,0,0,5">
+				<Label Content="Passport: "
+					   HorizontalContentAlignment="Right"
+					   Width="70" />
+				<TextBox x:Name="PassportTextBox"
+						 Text="{Binding Passport}"
+						 ToolTip="Passport"
+						 Width="100" />
+				<Label Content="Inn: "
+					   HorizontalContentAlignment="Right"
+					   Width="40" />
+				<TextBox x:Name="InnTextBox"
+						 Text="{Binding Inn}"
+						 ToolTip="Inn"
+						 Width="100" />
+			</StackPanel>
+			<StackPanel Orientation="Horizontal"
+						Margin="0,0,0,5">
+				<Label Content="Controller: "
+					   HorizontalContentAlignment="Right"
+					   Width="70" />
+				<ComboBox x:Name="ControllerComboBox"
+						  ItemsSource="{Binding Path=ExternalViewModel.Controllers}"
+						  DisplayMemberPath="Name"
+						  SelectedValuePath="Id"
+						  SelectedValue="{Binding Controller}"
+						  Width="240" />
+			</StackPanel>
+			<StackPanel Orientation="Horizontal"
+						Margin="0,0,0,5">
+				<Label Content="Total area: "
+					   HorizontalContentAlignment="Right"
+					   Width="70" />
+				<TextBox x:Name="MinAreaTextBox"
+						 Text="{Binding AreaMin}"
+						 ToolTip="MinArea"
+						 Width="100" />
+				<Label Content="-"
+					   Width="40"
+					   HorizontalContentAlignment="Center" />
+				<TextBox x:Name="MaxAreaTextBox"
+						 Text="{Binding AreaMax}"
+						 ToolTip="MaxArea"
+						 Width="100" />
+			</StackPanel>
+			<StackPanel Orientation="Horizontal"
+						Margin="0,0,0,5">
+				<Label Content="Staff: "
+					   HorizontalContentAlignment="Right"
+					   Width="70" />
+				<TextBox x:Name="MinStaffTextBox"
+						 Text="{Binding StaffMax}"
+						 ToolTip="MinStaff"
+						 Width="100" />
+				<Label Content="-"
+					   Width="40"
+					   HorizontalContentAlignment="Center" />
+				<TextBox x:Name="MaxStaffTextBox"
+						 Text="{Binding StaffMin}"
+						 ToolTip="MaxStaff"
+						 Width="100" />
+			</StackPanel>
+			<StackPanel Orientation="Horizontal"
+						Margin="0,0,0,5">
+				<Label Content="Profit: "
+					   HorizontalContentAlignment="Right"
+					   Width="70" />
+				<TextBox x:Name="MinProfitTextBox"
+						 Text="{Binding ProfitMin}"
+						 ToolTip="MinProfit"
+						 Width="100" />
+				<Label Content="-"
+					   Width="40"
+					   HorizontalContentAlignment="Center" />
+				<TextBox x:Name="MaxProfitTextBox"
+						 Text="{Binding ProfitMax}"
+						 ToolTip="MaxProfit"
+						 Width="100" />
+			</StackPanel>
+		</StackPanel>
+		<StackPanel Grid.Row="1"
+					Orientation="Horizontal"
+					HorizontalAlignment="Right">
+			<Button x:Name="OkButton"
+					Content="OK"
+					Click="OkButton_Click"
+					Width="70"
+					Margin="0,0,5,0" />
+			<Button x:Name="ClearButton"
+					Content="Clear"
+					Click="CancelButton_Click"
+					Width="70"
+					Margin="0,0,5,0" />
+			<Button x:Name="CancelButton"
+					Content="Cancel"
+					IsCancel="True"
+					Width="70"
+					Margin="0,0,5,0" />
+		</StackPanel>
+	</Grid>
+</Window>

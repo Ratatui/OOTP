@@ -8,33 +8,40 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using OOTP.Lab4.Screens;
 
 namespace OOTP.Lab4.ViewModels
 {
-	class Controller_ViewModel : BasicViewModel
+
+	/// <summary>
+	/// Controller page View Model
+	/// </summary>
+	public class Controller_ViewModel : BasicViewModel
 	{
 		#region Fields
 
-		private ObservableCollection<Controller> _controllers;
+		private Filter_ViewModel filterViewModel { get; set; }
+
+		private ObservableCollection<Controller> controllers;
 
 		public ObservableCollection<Controller> Controllers
 		{
-			get { return _controllers; }
+			get { return controllers; }
 			set
 			{
-				this._controllers = value;
+				this.controllers = value;
 				this.RaisePropertyChanged("Controllers");
 			}
 		}
 
-		private Controller _currentController;
+		private Controller currentController;
 
 		public Controller CurrentController
 		{
-			get { return this._currentController; }
+			get { return this.currentController; }
 			set
 			{
-				this._currentController = value;
+				this.currentController = value;
 				this.RaisePropertyChanged("CurrentController");
 			}
 		}
@@ -45,6 +52,7 @@ namespace OOTP.Lab4.ViewModels
 
 		public Controller_ViewModel()
 		{
+			this.filterViewModel = new Filter_ViewModel();
 			using (var uow = context.CreateUnitOfWork())
 			{
 				this.Controllers = new ObservableCollection<Controller>(uow.Controllers);
@@ -59,49 +67,59 @@ namespace OOTP.Lab4.ViewModels
 		{
 			get
 			{
-				if (_createCommand == null)
-					_createCommand = new RelayCommand(s => Create(), s => CanCreate());
-				return _createCommand;
+				if (createCommand == null)
+					createCommand = new RelayCommand(s => OnCreate(), s => CanCreate());
+				return createCommand;
 			}
 		}
 		public ICommand DeleteCommand
 		{
 			get
 			{
-				if (_deleteCommand == null)
-					_deleteCommand = new RelayCommand(s => Delete(), s => CanDelete());
-				return _deleteCommand;
+				if (deleteCommand == null)
+					deleteCommand = new RelayCommand(s => OnDelete(), s => CanDelete());
+				return deleteCommand;
 			}
 		}
 		public ICommand SaveCommand
 		{
 			get
 			{
-				if (_saveCommand == null)
-					_saveCommand = new RelayCommand(s => Save(), s => CanSave());
-				return _saveCommand;
+				if (saveCommand == null)
+					saveCommand = new RelayCommand(s => OnSave(), s => CanSave());
+				return saveCommand;
 			}
 		}
 		public ICommand RefreshCommand
 		{
 			get
 			{
-				if (_refreshCommand == null)
-					_refreshCommand = new RelayCommand(s => Refresh(), s => CanRefresh());
-				return _refreshCommand;
+				if (refreshCommand == null)
+					refreshCommand = new RelayCommand(s => OnRefresh(), s => CanRefresh());
+				return refreshCommand;
+			}
+		}
+		public ICommand FilterCommand
+		{
+			get
+			{
+				if (filterCommand == null)
+					filterCommand = new RelayCommand(s => OnFilter(), s => CanFilter());
+				return filterCommand;
 			}
 		}
 
-		private RelayCommand _createCommand;
-		private RelayCommand _deleteCommand;
-		private RelayCommand _saveCommand;
-		private RelayCommand _refreshCommand;
+		private RelayCommand createCommand { get; set; }
+		private RelayCommand deleteCommand { get; set; }
+		private RelayCommand saveCommand { get; set; }
+		private RelayCommand refreshCommand { get; set; }
+		private RelayCommand filterCommand { get; set; }
 
 		#endregion // Commands
 
 		#region Methods
 
-		private void Create()
+		private void OnCreate()
 		{
 			var newController = new Controller();
 			this.Controllers.Add(newController);
@@ -113,12 +131,12 @@ namespace OOTP.Lab4.ViewModels
 			return true;
 		}
 
-		private void Delete()
+		private void OnDelete()
 		{
 			using (var uow = context.CreateUnitOfWork())
 			{
 				uow.Remove(CurrentController);
-				Controllers.Remove(CurrentController);
+				this.Controllers.Remove(CurrentController);
 				uow.SaveChanges();
 			}
 		}
@@ -130,11 +148,11 @@ namespace OOTP.Lab4.ViewModels
 			return false;
 		}
 
-		private void Refresh()
+		private void OnRefresh()
 		{
 			using (var uow = context.CreateUnitOfWork())
 			{
-				Controllers = new ObservableCollection<Controller>(uow.Controllers);
+				this.Controllers = new ObservableCollection<Controller>(uow.Controllers);
 			}
 		}
 
@@ -143,7 +161,7 @@ namespace OOTP.Lab4.ViewModels
 			return true;
 		}
 
-		private void Save()
+		private void OnSave()
 		{
 			using (var uow = context.CreateUnitOfWork())
 			{
@@ -170,11 +188,37 @@ namespace OOTP.Lab4.ViewModels
 		{
 			if (CurrentController == null)
 				return false;
-			if ((CurrentController.EntityState == Mindscape.LightSpeed.EntityState.Modified 
+			if ((CurrentController.EntityState == Mindscape.LightSpeed.EntityState.Modified
 				|| CurrentController.EntityState == Mindscape.LightSpeed.EntityState.New)
 				&& CurrentController.IsValid)
 				return true;
 			return false;
+		}
+
+		private void OnFilter()
+		{
+
+			var wnd = new FilterControllersDialog();
+			wnd.ExternalControllerViewModel = this;
+			wnd.ExternalViewModel = filterViewModel;
+			wnd.Closed += (sender, args) =>
+				{
+					using (var uow = context.CreateUnitOfWork())
+					{
+						var query = from controller in uow.Controllers
+									where controller.Id == (filterViewModel.Controller ?? controller.Id)
+										&& controller.Name.Contains(filterViewModel.Name ?? "")
+									select controller;
+						this.Controllers = new ObservableCollection<Controller>(query);
+					}
+				};
+			wnd.ShowDialog();
+
+		}
+
+		private bool CanFilter()
+		{
+			return true;
 		}
 
 		#endregion // Methods

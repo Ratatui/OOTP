@@ -27,6 +27,7 @@ namespace OOTP.Lab4.Data
     private int _profit;
     private int _staff;
     private double _totalArea;
+    private bool _isPrivatized;
 
     #endregion
     
@@ -48,6 +49,8 @@ namespace OOTP.Lab4.Data
     public const string StaffField = "Staff";
     /// <summary>Identifies the TotalArea entity attribute.</summary>
     public const string TotalAreaField = "TotalArea";
+    /// <summary>Identifies the IsPrivatized entity attribute.</summary>
+    public const string IsPrivatizedField = "IsPrivatized";
 
 
     #endregion
@@ -123,6 +126,13 @@ namespace OOTP.Lab4.Data
     {
       get { return Get(ref _totalArea, "TotalArea"); }
       set { Set(ref _totalArea, value, "TotalArea"); }
+    }
+
+    [System.Diagnostics.DebuggerNonUserCode]
+    public bool IsPrivatized
+    {
+      get { return Get(ref _isPrivatized, "IsPrivatized"); }
+      set { Set(ref _isPrivatized, value, "IsPrivatized"); }
     }
 
     #endregion
@@ -268,7 +278,7 @@ namespace OOTP.Lab4.Data
     private string _license;
     [ValidateLength(0, 200)]
     private string _address;
-    [ValidateLength(17, 17)]
+    [ValidateLength(0, 17)]
     private string _telephone;
 
     #endregion

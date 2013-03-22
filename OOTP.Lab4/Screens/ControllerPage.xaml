@@ -56,6 +56,10 @@
 						Command="{Binding DeleteCommand, Source={StaticResource ViewModel}}">
 					<Image Source="Images/delete.png" />
 				</Button>
+				<Button ToolTip="Filter controller"
+						Command="{Binding FilterCommand, Source={StaticResource ViewModel}}">
+					<Image Source="Images/filter.png" />
+				</Button>
 			</ToolBar>
 			<StackPanel Visibility="{Binding FallbackValue=Visible, Path=CurrentController, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource ViewModel}}">
 				<StackPanel Orientation="Horizontal"

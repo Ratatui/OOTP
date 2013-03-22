@@ -33,6 +33,8 @@
 									Binding="{Binding LegalAddress}" />
 				<DataGridTextColumn Header="Telephone"
 									Binding="{Binding Telephone}" />
+				<DataGridCheckBoxColumn Header="IsPrivatized"
+										Binding="{Binding IsPrivatized}" />
 				<DataGridTextColumn Header="Profit ($)"
 									Binding="{Binding Profit}" />
 				<DataGridTextColumn Header="Staff"

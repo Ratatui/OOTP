@@ -34,7 +34,7 @@
 				<DataGridTextColumn Header="Inn"
 									Binding="{Binding Inn}" />
 				<DataGridTextColumn Header="Birthday"
-									Binding="{Binding Birthday}" />
+									Binding="{Binding BirthDay, StringFormat=dd.MM.yy}" />
 			</DataGrid.Columns>
 		</DataGrid>
 		<StackPanel Grid.Row="1">
@@ -55,6 +55,10 @@
 						Command="{Binding DeleteCommand}">
 					<Image Source="Images\delete.png" />
 				</Button>
+				<Button ToolTip="Filter buyers"
+						Command="{Binding FilterCommand}">
+					<Image Source="Images\filter.png" />
+				</Button>
 			</ToolBar>
 			<StackPanel DataContext="{Binding CurrentBuyer}"
 						Visibility="{Binding FallbackValue=Collapsed, Converter={StaticResource NullToVisibilityConverter}}">
@@ -64,30 +68,30 @@
 						   HorizontalContentAlignment="Right"
 						   Width="70" />
 					<TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-							 Width="200"/>
+							 Width="175"/>
 					<Label Content="Middle name: "
 						   HorizontalContentAlignment="Right"
-						   Width="70" />
+						   Width="85" />
 					<TextBox Text="{Binding MiddleName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-							 Width="200" />
+							 Width="175" />
 					<Label Content="Last name: "
 						   HorizontalContentAlignment="Right"
 						   Width="70" />
 					<TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-							 Width="200" />
+							 Width="175" />
 				</StackPanel>
 				<StackPanel Orientation="Horizontal"
 							Margin="0,0,0,5">
 					<Label Content="Passport: "
-						   HorizontalAlignment="Right"
+						   HorizontalContentAlignment="Right"
 						   Width="70" />
 					<TextBox Text="{Binding Passport, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-							 Width="200" />
+							 Width="175" />
 					<Label Content="Inn: "
-						   HorizontalAlignment="Right"
-						   Width="70" />
+						   HorizontalContentAlignment="Right"
+						   Width="85" />
 					<TextBox Text="{Binding Inn, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-							 Width="200"/>
+							 Width="175"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal"
 							Margin="0,0,0,5">
@@ -95,12 +99,12 @@
 						   HorizontalContentAlignment="Right"
 						   Width="70" />
 					<TextBox Text="{Binding Telephone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-							 Width="200"/>
+							 Width="175"/>
 					<Label Content="Birthday: "
 						   HorizontalContentAlignment="Right"
-						   Width="70" />
-					<DatePicker DisplayDate="{Binding Birthday, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-								Width="100"/>
+						   Width="85" />
+					<DatePicker SelectedDate="{Binding BirthDay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+								Width="175"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal"
 							Margin="0,0,0,5">
@@ -108,7 +112,7 @@
 						   HorizontalContentAlignment="Right"
 						   Width="70" />
 					<TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-							 Width="200"
+							 Width="175"
 							 MinLines="3"
 							 MaxLines="3"
 							 ScrollViewer.VerticalScrollBarVisibility="Auto"
