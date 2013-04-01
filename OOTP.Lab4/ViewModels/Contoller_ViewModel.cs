@@ -23,7 +23,6 @@ namespace OOTP.Lab4.ViewModels
 		private Filter_ViewModel filterViewModel { get; set; }
 
 		private ObservableCollection<Controller> controllers;
-
 		public ObservableCollection<Controller> Controllers
 		{
 			get { return controllers; }
@@ -35,12 +34,20 @@ namespace OOTP.Lab4.ViewModels
 		}
 
 		private Controller currentController;
-
 		public Controller CurrentController
 		{
 			get { return this.currentController; }
 			set
 			{
+				if (CanSaveCommand())
+				{
+					if (MessageBox.Show("Save changes?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+					{
+						OnSaveCommand();
+					}
+					else
+						currentController.CancelEdit();
+				}
 				this.currentController = value;
 				this.RaisePropertyChanged("CurrentController");
 			}
@@ -63,75 +70,73 @@ namespace OOTP.Lab4.ViewModels
 
 		#region Commands
 
+		private RelayCommand createCommand;
 		public ICommand CreateCommand
 		{
 			get
 			{
 				if (createCommand == null)
-					createCommand = new RelayCommand(s => OnCreate(), s => CanCreate());
+					createCommand = new RelayCommand(s => OnCreateCommand(), s => CanCreateCommand());
 				return createCommand;
 			}
 		}
+
+		private RelayCommand deleteCommand;
 		public ICommand DeleteCommand
 		{
 			get
 			{
 				if (deleteCommand == null)
-					deleteCommand = new RelayCommand(s => OnDelete(), s => CanDelete());
+					deleteCommand = new RelayCommand(s => OnDeleteCommand(), s => CanDeleteCommand());
 				return deleteCommand;
 			}
 		}
+
+		private RelayCommand saveCommand;
 		public ICommand SaveCommand
 		{
 			get
 			{
 				if (saveCommand == null)
-					saveCommand = new RelayCommand(s => OnSave(), s => CanSave());
+					saveCommand = new RelayCommand(s => OnSaveCommand(), s => CanSaveCommand());
 				return saveCommand;
 			}
 		}
+
+		private RelayCommand refreshCommand;
 		public ICommand RefreshCommand
 		{
 			get
 			{
 				if (refreshCommand == null)
-					refreshCommand = new RelayCommand(s => OnRefresh(), s => CanRefresh());
+					refreshCommand = new RelayCommand(s => OnRefreshCommand(), s => CanRefreshCommand());
 				return refreshCommand;
 			}
 		}
+
+		private RelayCommand filterCommand;
 		public ICommand FilterCommand
 		{
 			get
 			{
 				if (filterCommand == null)
-					filterCommand = new RelayCommand(s => OnFilter(), s => CanFilter());
+					filterCommand = new RelayCommand(s => OnFilterCommand(), s => CanFilter());
 				return filterCommand;
 			}
 		}
-
-		private RelayCommand createCommand { get; set; }
-		private RelayCommand deleteCommand { get; set; }
-		private RelayCommand saveCommand { get; set; }
-		private RelayCommand refreshCommand { get; set; }
-		private RelayCommand filterCommand { get; set; }
 
 		#endregion // Commands
 
 		#region Methods
 
-		private void OnCreate()
+		private void OnCreateCommand()
 		{
 			var newController = new Controller();
 			this.Controllers.Add(newController);
 			this.CurrentController = newController;
 		}
 
-		private bool CanCreate()
-		{
-			return true;
-		}
-
-		private void OnDelete()
+		private void OnDeleteCommand()
 		{
 			using (var uow = context.CreateUnitOfWork())
 			{
@@ -141,14 +146,7 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
-		private bool CanDelete()
-		{
-			if (CurrentController != null)
-				return true;
-			return false;
-		}
-
-		private void OnRefresh()
+		private void OnRefreshCommand()
 		{
 			using (var uow = context.CreateUnitOfWork())
 			{
@@ -156,13 +154,9 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
-		private bool CanRefresh()
+		private void OnSaveCommand()
 		{
-			return true;
-		}
-
-		private void OnSave()
-		{
+			this.currentController.EndEdit();
 			using (var uow = context.CreateUnitOfWork())
 			{
 				if (CurrentController.EntityState == Mindscape.LightSpeed.EntityState.New)
@@ -184,18 +178,7 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
-		private bool CanSave()
-		{
-			if (CurrentController == null)
-				return false;
-			if ((CurrentController.EntityState == Mindscape.LightSpeed.EntityState.Modified
-				|| CurrentController.EntityState == Mindscape.LightSpeed.EntityState.New)
-				&& CurrentController.IsValid)
-				return true;
-			return false;
-		}
-
-		private void OnFilter()
+		private void OnFilterCommand()
 		{
 
 			var wnd = new FilterControllersDialog();
@@ -213,7 +196,35 @@ namespace OOTP.Lab4.ViewModels
 					}
 				};
 			wnd.ShowDialog();
+		}
 
+
+		private bool CanCreateCommand()
+		{
+			return true;
+		}
+
+		private bool CanDeleteCommand()
+		{
+			if (CurrentController != null)
+				return true;
+			return false;
+		}
+
+		private bool CanRefreshCommand()
+		{
+			return true;
+		}
+
+		private bool CanSaveCommand()
+		{
+			if (CurrentController == null)
+				return false;
+			if ((CurrentController.EntityState == Mindscape.LightSpeed.EntityState.Modified
+				|| CurrentController.EntityState == Mindscape.LightSpeed.EntityState.New)
+				&& CurrentController.IsValid)
+				return true;
+			return false;
 		}
 
 		private bool CanFilter()

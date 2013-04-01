@@ -14,13 +14,13 @@ namespace OOTP.Lab4.Data
   {
     #region Fields
   
-    [ValidateLength(0, 100)]
+    [ValidateLength(1, 100)]
     private string _name;
-    [ValidateLength(0, 200)]
+    [ValidateLength(1, 200)]
     private string _description;
-    [ValidateLength(0, 200)]
+    [ValidateLength(1, 200)]
     private string _address;
-    [ValidateLength(0, 200)]
+    [ValidateLength(1, 200)]
     private string _legalAddress;
     [ValidateLength(17, 17)]
     private string _telephone;
@@ -147,17 +147,17 @@ namespace OOTP.Lab4.Data
   {
     #region Fields
   
-    [ValidateLength(0, 50)]
+    [ValidateLength(1, 50)]
     private string _firstName;
-    [ValidateLength(0, 50)]
+    [ValidateLength(1, 50)]
     private string _lastName;
-    [ValidateLength(0, 50)]
+    [ValidateLength(1, 50)]
     private string _middleName;
     [ValidateLength(8, 8)]
     private string _passport;
     [ValidateLength(10, 10)]
     private string _inn;
-    [ValidateLength(0, 200)]
+    [ValidateLength(1, 200)]
     private string _address;
     [ValidateLength(17, 17)]
     private string _telephone;
@@ -272,11 +272,11 @@ namespace OOTP.Lab4.Data
   {
     #region Fields
   
-    [ValidateLength(0, 100)]
+    [ValidateLength(1, 100)]
     private string _name;
     [ValidateLength(10, 10)]
     private string _license;
-    [ValidateLength(0, 200)]
+    [ValidateLength(1, 200)]
     private string _address;
     [ValidateLength(0, 17)]
     private string _telephone;

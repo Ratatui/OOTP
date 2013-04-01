@@ -21,7 +21,7 @@ namespace OOTP.Lab4.Screens
 	public partial class FilterOrganizationsDialog : Window
 	{
 		public Filter_ViewModel ExternalViewModel { get; set; }
-		public Agreement_ViewModel ExternalAgreementViewModel { get; set; }
+		public Organization_ViewModel ExternalOrganizationViewModel { get; set; }
 
 		public FilterOrganizationsDialog()
 		{
@@ -29,7 +29,6 @@ namespace OOTP.Lab4.Screens
 			this.Loaded += (s, args) =>
 				{
 					this.DataContext = ExternalViewModel;
-					ControllerComboBox.ItemsSource = ExternalAgreementViewModel.Controllers;
 				};
 		}
 
@@ -41,7 +40,7 @@ namespace OOTP.Lab4.Screens
 		private void CancelButton_Click(object sender, RoutedEventArgs e)
 		{
 			ExternalViewModel.Clear();
-			ExternalAgreementViewModel.RefreshCommand.Execute(null);
+			ExternalOrganizationViewModel.RefreshCommand.Execute(null);
 			this.DialogResult = false;
 		}
 	}

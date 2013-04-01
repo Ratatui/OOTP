@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace OOTP.Lab4.ViewModels
@@ -33,6 +34,15 @@ namespace OOTP.Lab4.ViewModels
 			get { return currentBuyer; }
 			set
 			{
+				if (CanSaveCommand())
+				{
+					if (MessageBox.Show("Save changes?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+					{
+						OnSaveCommand();
+					}
+					else
+						currentBuyer.CancelEdit();
+				}
 				currentBuyer = value;
 				this.RaisePropertyChanged("CurrentBuyer");
 			}
@@ -61,7 +71,7 @@ namespace OOTP.Lab4.ViewModels
 			get
 			{
 				if (createCommand == null)
-					createCommand = new RelayCommand(s => OnCreate(), s => CanCreate());
+					createCommand = new RelayCommand(s => OnCreateCommand(), s => CanCreateCommand());
 				return createCommand;
 			}
 		}
@@ -72,7 +82,7 @@ namespace OOTP.Lab4.ViewModels
 			get
 			{
 				if (refreshCommand == null)
-					refreshCommand = new RelayCommand(s => OnRefresh(), s => CanRefresh());
+					refreshCommand = new RelayCommand(s => OnRefreshCommand(), s => CanRefreshCommand());
 				return refreshCommand;
 			}
 		}
@@ -83,7 +93,7 @@ namespace OOTP.Lab4.ViewModels
 			get
 			{
 				if (saveCommand == null)
-					saveCommand = new RelayCommand(s => OnSave(), s => CanSave());
+					saveCommand = new RelayCommand(s => OnSaveCommand(), s => CanSaveCommand());
 				return saveCommand;
 			}
 		}
@@ -94,7 +104,7 @@ namespace OOTP.Lab4.ViewModels
 			get
 			{
 				if (deleteCommand == null)
-					deleteCommand = new RelayCommand(s => OnDelete(), s => CanDelete());
+					deleteCommand = new RelayCommand(s => OnDeleteCommand(), s => CanDeleteCommand());
 				return deleteCommand;
 			}
 		}
@@ -105,7 +115,7 @@ namespace OOTP.Lab4.ViewModels
 			get
 			{
 				if (filterCommand == null)
-					filterCommand = new RelayCommand(s => OnFilter(), s => CanFilter());
+					filterCommand = new RelayCommand(s => OnFilterCommand(), s => CanFilterCommand());
 				return filterCommand;
 			}
 		}
@@ -114,19 +124,14 @@ namespace OOTP.Lab4.ViewModels
 
 		#region Methods
 
-		private void OnCreate()
+		private void OnCreateCommand()
 		{
 			var newBuyer = new Buyer();
 			this.Buyers.Add(newBuyer);
 			this.CurrentBuyer = newBuyer;
 		}
 
-		private bool CanCreate()
-		{
-			return true;
-		}
-
-		private void OnRefresh()
+		private void OnRefreshCommand()
 		{
 			using (var uow = context.CreateUnitOfWork())
 			{
@@ -134,12 +139,7 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
-		private bool CanRefresh()
-		{
-			return true;
-		}
-
-		private void OnDelete()
+		private void OnDeleteCommand()
 		{
 			using (var uow = context.CreateUnitOfWork())
 			{
@@ -149,15 +149,9 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
-		private bool CanDelete()
+		private void OnSaveCommand()
 		{
-			if (CurrentBuyer != null)
-				return true;
-			return false;
-		}
-
-		private void OnSave()
-		{
+			this.currentBuyer.EndEdit();
 			using (var uow = context.CreateUnitOfWork())
 			{
 				if (CurrentBuyer.EntityState == Mindscape.LightSpeed.EntityState.New)
@@ -183,18 +177,7 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
-		private bool CanSave()
-		{
-			if (CurrentBuyer == null)
-				return false;
-			if ((CurrentBuyer.EntityState == Mindscape.LightSpeed.EntityState.New
-				|| CurrentBuyer.EntityState == Mindscape.LightSpeed.EntityState.Modified)
-				&& CurrentBuyer.IsValid)
-				return true;
-			return false;
-		}
-
-		private void OnFilter()
+		private void OnFilterCommand()
 		{
 			var wnd = new FilterBuyersDialog();
 			wnd.ExternalBuyerViewModel = this;
@@ -215,7 +198,36 @@ namespace OOTP.Lab4.ViewModels
 			wnd.ShowDialog();
 		}
 
-		private bool CanFilter()
+
+		private bool CanCreateCommand()
+		{
+			return true;
+		}
+
+		private bool CanRefreshCommand()
+		{
+			return true;
+		}
+
+		private bool CanDeleteCommand()
+		{
+			if (CurrentBuyer != null)
+				return true;
+			return false;
+		}
+
+		private bool CanSaveCommand()
+		{
+			if (CurrentBuyer == null)
+				return false;
+			if ((CurrentBuyer.EntityState == Mindscape.LightSpeed.EntityState.New
+				|| CurrentBuyer.EntityState == Mindscape.LightSpeed.EntityState.Modified)
+				&& CurrentBuyer.IsValid)
+				return true;
+			return false;
+		}
+
+		private bool CanFilterCommand()
 		{
 			return true;
 		}

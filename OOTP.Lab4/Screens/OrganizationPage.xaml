@@ -61,6 +61,10 @@
 						Command="{Binding DeleteCommand}">
 					<Image Source="Images\delete.png" />
 				</Button>
+				<Button ToolTip="Filter organization"
+						Command="{Binding FilterCommand}">
+					<Image Source="Images\filter.png" />
+				</Button>
 			</ToolBar>
 			<StackPanel Visibility="{Binding FallbackValue=Visible, Converter={StaticResource NullToVisibilityConverter}}"
 						DataContext="{Binding CurrentOrganization}">

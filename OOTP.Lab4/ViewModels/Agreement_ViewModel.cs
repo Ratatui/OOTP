@@ -1,11 +1,8 @@
 ﻿using OOTP.Lab4.Data;
 using OOTP.Lab4.Screens;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace OOTP.Lab4.ViewModels
@@ -14,20 +11,7 @@ namespace OOTP.Lab4.ViewModels
 	{
 		#region Fields
 
-		private Agreement currentAgreement { get; set; }
-
-		private Filter_ViewModel filterViewModel { get; set; }
-
-		private ObservableCollection<Agreement> agreements { get; set; }
-
-		private ObservableCollection<Buyer> buyers { get; set; }
-
-		private ObservableCollection<Controller> controllers { get; set; }
-
-		private ObservableCollection<Organization> organizations { get; set; }
-
-		private ObservableCollection<Organization> privatizedOrganizations { get; set; }
-
+		private ObservableCollection<Agreement> agreements;
 		public ObservableCollection<Agreement> Agreements
 		{
 			get { return agreements; }
@@ -38,6 +22,7 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
+		private ObservableCollection<Buyer> buyers;
 		public ObservableCollection<Buyer> Buyers
 		{
 			get { return buyers; }
@@ -48,6 +33,7 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
+		private ObservableCollection<Controller> controllers;
 		public ObservableCollection<Controller> Controllers
 		{
 			get { return controllers; }
@@ -58,6 +44,7 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
+		private ObservableCollection<Organization> organizations;
 		public ObservableCollection<Organization> Organizations
 		{
 			get { return organizations; }
@@ -68,6 +55,7 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
+		private ObservableCollection<Organization> privatizedOrganizations;
 		public ObservableCollection<Organization> PrivatizedOrganizations
 		{
 			get { return privatizedOrganizations; }
@@ -78,73 +66,89 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
+		private Agreement currentAgreement;
 		public Agreement CurrentAgreement
 		{
 			get { return currentAgreement; }
 			set
 			{
+				if (CanSaveCommand())
+				{
+					if (MessageBox.Show("Save changes?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+					{
+						OnSaveCommand();
+					}
+					else
+						currentAgreement.CancelEdit();
+				}
 				currentAgreement = value;
+				currentAgreement.BeginEdit();
 				this.RaisePropertyChanged("CurrentAgreement");
 			}
 		}
+
+		private Filter_ViewModel filterViewModel { get; set; }
 
 		#endregion // Fields
 
 		#region Commands
 
+		private RelayCommand createCommand;
 		public ICommand CreateCommand
 		{
 			get
 			{
 				if (createCommand == null)
-					createCommand = new RelayCommand(s => OnCreate(), s => CanCreate());
+					createCommand = new RelayCommand(s => OnCreateCommand(), s => CanCreateCommand());
 				return createCommand;
 			}
 		}
+
+		private RelayCommand refreshCommand;
 		public ICommand RefreshCommand
 		{
 			get
 			{
 				if (refreshCommand == null)
-					refreshCommand = new RelayCommand(s => OnRefresh(), s => CanRefresh());
+					refreshCommand = new RelayCommand(s => OnRefreshCommand(), s => CanRefreshCommand());
 				return refreshCommand;
 			}
 		}
+
+		private RelayCommand deleteCommand;
 		public ICommand DeleteCommand
 		{
 			get
 			{
 				if (deleteCommand == null)
-					deleteCommand = new RelayCommand(s => OnDelete(), s => CanDelete());
+					deleteCommand = new RelayCommand(s => OnDeleteCommand(), s => CanDeleteCommand());
 				return deleteCommand;
 			}
 		}
+
+		private RelayCommand saveCommand;
 		public ICommand SaveCommand
 		{
 			get
 			{
 				if (saveCommand == null)
 				{
-					saveCommand = new RelayCommand(s => this.OnSave(), s => this.CanSave());
+					saveCommand = new RelayCommand(s => this.OnSaveCommand(), s => this.CanSaveCommand());
 				}
 				return saveCommand;
 			}
 		}
+
+		private RelayCommand filterCommand;
 		public ICommand FilterCommand
 		{
 			get
 			{
 				if (filterCommand == null)
-					filterCommand = new RelayCommand(s => OnFilter(), s => CanFilter());
+					filterCommand = new RelayCommand(s => OnFilterCommand(), s => CanFilterCommand());
 				return filterCommand;
 			}
 		}
-
-		private RelayCommand createCommand { get; set; }
-		private RelayCommand deleteCommand { get; set; }
-		private RelayCommand saveCommand { get; set; }
-		private RelayCommand refreshCommand { get; set; }
-		private RelayCommand filterCommand { get; set; }
 
 		#endregion
 
@@ -152,6 +156,7 @@ namespace OOTP.Lab4.ViewModels
 
 		public Agreement_ViewModel()
 		{
+			this.filterViewModel = new Filter_ViewModel();
 			using (var uow = context.CreateUnitOfWork())
 			{
 				this.Organizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == false).OrderBy(s => s.Name));
@@ -159,8 +164,6 @@ namespace OOTP.Lab4.ViewModels
 				this.Controllers = new ObservableCollection<Controller>(uow.Controllers.OrderBy(s => s.Name));
 				this.Buyers = new ObservableCollection<Buyer>(uow.Buyers.OrderBy(s => s.Passport));
 				this.Agreements = new ObservableCollection<Agreement>(uow.Agreements.OrderBy(s => s.Number));
-
-				this.filterViewModel = new Filter_ViewModel();
 
 				#region Fake Data
 				//Random rand = new Random();
@@ -189,7 +192,7 @@ namespace OOTP.Lab4.ViewModels
 
 		#region Methods
 
-		private void OnCreate()
+		private void OnCreateCommand()
 		{
 			using (var uow = context.CreateUnitOfWork())
 			{
@@ -199,12 +202,7 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
-		private bool CanCreate()
-		{
-			return true;
-		}
-
-		private void OnRefresh()
+		private void OnRefreshCommand()
 		{
 			using (var uow = context.CreateUnitOfWork())
 			{
@@ -216,12 +214,7 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
-		private bool CanRefresh()
-		{
-			return true;
-		}
-
-		private void OnDelete()
+		private void OnDeleteCommand()
 		{
 			using (var uow = context.CreateUnitOfWork())
 			{
@@ -232,17 +225,11 @@ namespace OOTP.Lab4.ViewModels
 			}
 		}
 
-		private bool CanDelete()
-		{
-			if (this.CurrentAgreement != null)
-				return true;
-			return false;
-		}
-
-		private void OnSave()
+		private void OnSaveCommand()
 		{
 			using (var uow = context.CreateUnitOfWork())
 			{
+				this.currentAgreement.EndEdit();
 				if (CurrentAgreement.EntityState == Mindscape.LightSpeed.EntityState.New)
 				{
 					uow.Add(CurrentAgreement);
@@ -263,10 +250,72 @@ namespace OOTP.Lab4.ViewModels
 					}
 					uow.SaveChanges();
 				}
+				
 			}
 		}
 
-		private bool CanSave()
+		private void OnFilterCommand()
+		{
+			var wnd = new FilterAgreementsDialog();
+			wnd.ExternalViewModel = filterViewModel;
+			wnd.ExternalAgreementViewModel = this;
+			wnd.Closed += (sender, args) =>
+			{
+				if (wnd.DialogResult == true)
+				{
+					using (var uow = context.CreateUnitOfWork())
+					{
+						var query = from agreement in uow.Agreements
+									join organization in uow.Organizations
+									on agreement.OrganizationId equals organization.Id
+									join buyer in uow.Buyers
+									on agreement.BuyerId equals buyer.Id
+									join controller in uow.Controllers
+									on agreement.ControllerId equals controller.Id
+									where agreement.Number.Contains(filterViewModel.Number ?? "")
+										&& agreement.Date >= (filterViewModel.DateStart ?? agreement.Date)
+										&& agreement.Date <= (filterViewModel.DateEnd ?? agreement.Date)
+										&& organization.Name.Contains(filterViewModel.Name ?? "")
+										&& organization.Profit >= (filterViewModel.ProfitMin ?? organization.Profit)
+										&& organization.Profit <= (filterViewModel.ProfitMax ?? organization.Profit)
+										&& organization.TotalArea >= (filterViewModel.AreaMin ?? organization.TotalArea)
+										&& organization.TotalArea <= (filterViewModel.AreaMax ?? organization.TotalArea)
+										&& organization.Staff >= (filterViewModel.StaffMin ?? organization.Staff)
+										&& organization.Staff <= (filterViewModel.StaffMax ?? organization.Staff)
+										&& buyer.Passport.Contains(filterViewModel.Passport ?? "")
+										&& buyer.Inn.Contains(filterViewModel.Inn ?? "")
+										&& controller.Id == (filterViewModel.Controller ?? controller.Id)
+									select agreement;
+						this.Organizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == false).OrderBy(s => s.Name));
+						this.PrivatizedOrganizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == true));
+						this.Controllers = new ObservableCollection<Controller>(uow.Controllers.OrderBy(s => s.Name));
+						this.Buyers = new ObservableCollection<Buyer>(uow.Buyers.OrderBy(s => s.Passport));
+						this.Agreements = new ObservableCollection<Agreement>(query);
+					}
+				}
+			};
+			wnd.ShowDialog();
+		}
+
+
+		private bool CanCreateCommand()
+		{
+			return true;
+		}
+
+		private bool CanRefreshCommand()
+		{
+			return true;
+		}
+
+		private bool CanDeleteCommand()
+		{
+			if (this.CurrentAgreement != null)
+				return true;
+			return false;
+		}
+
+		private bool CanSaveCommand()
 		{
 			if (this.CurrentAgreement == null)
 				return false;
@@ -277,50 +326,7 @@ namespace OOTP.Lab4.ViewModels
 			return false;
 		}
 
-		private void OnFilter()
-		{
-			var wnd = new FilterOrganizationsDialog();
-			wnd.ExternalViewModel = filterViewModel;
-			wnd.ExternalAgreementViewModel = this;
-			wnd.Closed += (sender, args) =>
-				{
-					if (wnd.DialogResult == true)
-					{
-						using (var uow = context.CreateUnitOfWork())
-						{
-							var query = from agreement in uow.Agreements
-										join organization in uow.Organizations
-										on agreement.OrganizationId equals organization.Id
-										join buyer in uow.Buyers
-										on agreement.BuyerId equals buyer.Id
-										join controller in uow.Controllers
-										on agreement.ControllerId equals controller.Id
-										where agreement.Number.Contains(filterViewModel.Number ?? "")
-											&& agreement.Date >= (filterViewModel.DateStart ?? agreement.Date)
-											&& agreement.Date <= (filterViewModel.DateEnd ?? agreement.Date)
-											&& organization.Name.Contains(filterViewModel.Name ?? "")
-											&& organization.Profit >= (filterViewModel.ProfitMin ?? organization.Profit)
-											&& organization.Profit <= (filterViewModel.ProfitMax ?? organization.Profit)
-											&& organization.TotalArea >= (filterViewModel.AreaMin ?? organization.TotalArea)
-											&& organization.TotalArea <= (filterViewModel.AreaMax ?? organization.TotalArea)
-											&& organization.Staff >= (filterViewModel.StaffMin ?? organization.Staff)
-											&& organization.Staff <= (filterViewModel.StaffMax ?? organization.Staff)
-											&& buyer.Passport.Contains(filterViewModel.Passport ?? "")
-											&& buyer.Inn.Contains(filterViewModel.Inn ?? "")
-											&& controller.Id == (filterViewModel.Controller ?? controller.Id)
-										select agreement;
-							this.Organizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == false).OrderBy(s => s.Name));
-							this.PrivatizedOrganizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == true));
-							this.Controllers = new ObservableCollection<Controller>(uow.Controllers.OrderBy(s => s.Name));
-							this.Buyers = new ObservableCollection<Buyer>(uow.Buyers.OrderBy(s => s.Passport));
-							this.Agreements = new ObservableCollection<Agreement>(query);
-						}
-					}
-				};
-			wnd.ShowDialog();
-		}
-
-		private bool CanFilter()
+		private bool CanFilterCommand()
 		{
 			return true;
 		}

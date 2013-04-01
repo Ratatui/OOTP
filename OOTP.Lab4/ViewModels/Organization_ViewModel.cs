@@ -2,37 +2,47 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
+using OOTP.Lab4.Screens;
+using System.Windows;
 
 namespace OOTP.Lab4.ViewModels
 {
-	class Organization_ViewModel : BasicViewModel
+	public class Organization_ViewModel : BasicViewModel
 	{
 		#region Fields
 
-		private ObservableCollection<Organization> _organizations;
+		private Filter_ViewModel filterViewModel { get; set; }
 
+		private ObservableCollection<Organization> organizations;
 		public ObservableCollection<Organization> Organizations
 		{
-			get { return _organizations; }
+			get { return organizations; }
 			set
 			{
-				_organizations = value;
+				organizations = value;
 				this.RaisePropertyChanged("Organizations");
 			}
 		}
 
-		private Organization _currentOrganization;
-
+		private Organization currentOrganization;
 		public Organization CurrentOrganization
 		{
-			get { return _currentOrganization; }
+			get { return currentOrganization; }
 			set
 			{
-				_currentOrganization = value;
+				if (CanSaveCommand())
+				{
+					if (MessageBox.Show("Save changes?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+					{
+						OnSaveCommand();
+					}
+					else
+						currentOrganization.CancelEdit();
+				}
+				currentOrganization = value;
 				this.RaisePropertyChanged("CurrentOrganization");
 			}
 		}
-
 
 		#endregion // Fields
 
@@ -40,9 +50,10 @@ namespace OOTP.Lab4.ViewModels
 
 		public Organization_ViewModel()
 		{
+			this.filterViewModel = new Filter_ViewModel();
 			using (var uow = context.CreateUnitOfWork())
 			{
-				Organizations = new ObservableCollection<Organization>(uow.Organizations);
+				this.Organizations = new ObservableCollection<Organization>(uow.Organizations);
 			}
 		}
 
@@ -50,51 +61,58 @@ namespace OOTP.Lab4.ViewModels
 
 		#region Commands
 
-		private RelayCommand _createCommand;
-
+		private RelayCommand createCommand;
 		public ICommand CreateCommand
 		{
 			get
 			{
-				if (_createCommand == null)
-					_createCommand = new RelayCommand(s => Create(), s => CanCreate());
-				return _createCommand;
+				if (createCommand == null)
+					createCommand = new RelayCommand(s => OnCreateCommand(), s => CanCreateCommand());
+				return createCommand;
 			}
 		}
 
-		private RelayCommand _refreshCommand;
-
+		private RelayCommand refreshCommand;
 		public ICommand RefreshCommand
 		{
 			get
 			{
-				if (_refreshCommand == null)
-					_refreshCommand = new RelayCommand(s => Refresh(), s => CanRefresh());
-				return _refreshCommand;
+				if (refreshCommand == null)
+					refreshCommand = new RelayCommand(s => OnRefreshCommand(), s => CanRefreshCommand());
+				return refreshCommand;
 			}
 		}
 
-		private RelayCommand _deleteCommand;
-
+		private RelayCommand deleteCommand;
 		public ICommand DeleteCommand
 		{
 			get
 			{
-				if (_deleteCommand == null)
-					_deleteCommand = new RelayCommand(s => Delete(), s => CanDelete());
-				return _deleteCommand;
+				if (deleteCommand == null)
+					deleteCommand = new RelayCommand(s => OnDeleteCommand(), s => CanDeleteCommand());
+				return deleteCommand;
 			}
 		}
 
-		private RelayCommand _saveCommand;
-
+		private RelayCommand saveCommand;
 		public ICommand SaveCommand
 		{
 			get
 			{
-				if (_saveCommand == null)
-					_saveCommand = new RelayCommand(s => Save(), s => CanSave());
-				return _saveCommand;
+				if (saveCommand == null)
+					saveCommand = new RelayCommand(s => OnSaveCommand(), s => CanSaveCommand());
+				return saveCommand;
+			}
+		}
+
+		private RelayCommand filterCommand;
+		public ICommand FilterCommand
+		{
+			get
+			{
+				if (filterCommand == null)
+					filterCommand = new RelayCommand(s => OnFilterCommand(), s => CanFilterCommand());
+				return filterCommand;
 			}
 		}
 
@@ -102,20 +120,16 @@ namespace OOTP.Lab4.ViewModels
 
 		#region Methods
 
-		private void Create()
+		private void OnCreateCommand()
 		{
 			var newOrganization = new Organization();
-			CurrentOrganization = newOrganization;
-			Organizations.Add(newOrganization);
+			this.CurrentOrganization = newOrganization;
+			this.Organizations.Add(newOrganization);
 		}
 
-		private bool CanCreate()
+		private void OnSaveCommand()
 		{
-			return true;
-		}
-
-		private void Save()
-		{
+			this.currentOrganization.EndEdit();
 			using (var uow = context.CreateUnitOfWork())
 			{
 				if (CurrentOrganization.EntityState == Mindscape.LightSpeed.EntityState.New)
@@ -143,7 +157,55 @@ namespace OOTP.Lab4.ViewModels
 
 		}
 
-		private bool CanSave()
+		private void OnRefreshCommand()
+		{
+			using (var uow = context.CreateUnitOfWork())
+			{
+				this.Organizations = new ObservableCollection<Organization>(uow.Organizations);
+			}
+		}
+
+		private void OnDeleteCommand()
+		{
+			using (var uow = context.CreateUnitOfWork())
+			{
+				uow.Remove(CurrentOrganization);
+				this.Organizations.Remove(CurrentOrganization);
+				uow.SaveChanges();
+			}
+		}
+
+		private void OnFilterCommand()
+		{
+			var wnd = new FilterOrganizationsDialog();
+			wnd.ExternalViewModel = filterViewModel;
+			wnd.ExternalOrganizationViewModel = this;
+			wnd.Closed += (s, args) =>
+				{
+					using (var uow = context.CreateUnitOfWork())
+					{
+						var query = from organization in uow.Organizations
+									where organization.Name.Contains(filterViewModel.Name ?? "")
+										&& organization.TotalArea >= (filterViewModel.AreaMin ?? organization.TotalArea)
+										&& organization.TotalArea <= (filterViewModel.AreaMax ?? organization.TotalArea)
+										&& organization.Staff >= (filterViewModel.StaffMin ?? organization.Staff)
+										&& organization.Staff <= (filterViewModel.StaffMax ?? organization.Staff)
+										&& organization.Profit >= (filterViewModel.ProfitMin ?? organization.Profit)
+										&& organization.Profit <= (filterViewModel.ProfitMax ?? organization.Profit)
+									select organization;
+						this.Organizations = new ObservableCollection<Organization>(query);
+					}
+				};
+			wnd.ShowDialog();
+		}
+
+
+		private bool CanCreateCommand()
+		{
+			return true;
+		}
+
+		private bool CanSaveCommand()
 		{
 			if (CurrentOrganization == null)
 				return false;
@@ -154,33 +216,20 @@ namespace OOTP.Lab4.ViewModels
 			return false;
 		}
 
-		private void Refresh()
-		{
-			using (var uow = context.CreateUnitOfWork())
-			{
-				Organizations = new ObservableCollection<Organization>(uow.Organizations);
-			}
-		}
-
-		private bool CanRefresh()
+		private bool CanRefreshCommand()
 		{
 			return true;
 		}
 
-		private void Delete()
-		{
-			using (var uow = context.CreateUnitOfWork())
-			{
-				uow.Remove(CurrentOrganization);
-				Organizations.Remove(CurrentOrganization);
-				uow.SaveChanges();
-			}
-		}
-
-		private bool CanDelete()
+		private bool CanDeleteCommand()
 		{
 			if (CurrentOrganization == null)
 				return false;
+			return true;
+		}
+
+		private bool CanFilterCommand()
+		{
 			return true;
 		}
 

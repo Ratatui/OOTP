@@ -27,7 +27,7 @@ namespace OOTP.Lab4.Data
 
 		string IDataErrorInfo.Error
 		{
-			get { throw new NotImplementedException(); }
+			get { return null; }
 		}
 
 		string IDataErrorInfo.this[string columnName]
