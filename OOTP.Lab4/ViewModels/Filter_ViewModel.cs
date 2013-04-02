@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOTP.Lab4.ViewModels
 {
+	/// <summary>
+	/// Filter Dialogs View Model
+	/// </summary>
 	public class Filter_ViewModel : BasicViewModel
 	{
 		public string Number { get; set; }

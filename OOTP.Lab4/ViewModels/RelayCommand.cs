@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace OOTP.Lab4.ViewModels
 {
+	/// <summary>
+	/// Relay Command Class
+	/// </summary>
 	class RelayCommand : ICommand
 	{
 		#region Fields

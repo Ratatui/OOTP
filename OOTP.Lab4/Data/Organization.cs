@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace OOTP.Lab4.Data
 {
+	/// <summary>
+	/// Organization information
+	/// Inplementation IDataErrorInfo
+	/// </summary>
 	public partial class Organization : IDataErrorInfo
 	{
 		#region Consctructors

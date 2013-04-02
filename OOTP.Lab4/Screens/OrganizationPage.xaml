@@ -12,12 +12,14 @@
 		<viewmodel:Organization_ViewModel x:Key="ViewModel" />
 		<converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 	</Page.Resources>
-	<Grid DataContext="{StaticResource ViewModel}">
+	<Grid x:Name="LayoutRoot"
+		  DataContext="{StaticResource ViewModel}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
 			<RowDefinition Height="200" />
 		</Grid.RowDefinitions>
-		<DataGrid Grid.Row="0"
+		<DataGrid x:Name="OrganizationDataGrid"
+				  Grid.Row="0"
 				  ItemsSource="{Binding Organizations}"
 				  SelectedItem="{Binding CurrentOrganization}"
 				  AutoGenerateColumns="False"
@@ -44,7 +46,10 @@
 			</DataGrid.Columns>
 		</DataGrid>
 		<StackPanel Grid.Row="1">
-			<ToolBar Height="32">
+
+			<!--ToolBar-->
+			<ToolBar x:Name="OrganizationToolBar"
+					 Height="32">
 				<Button ToolTip="Add new organization"
 						Command="{Binding CreateCommand}">
 					<Image Source="Images\new.png" />
@@ -66,19 +71,23 @@
 					<Image Source="Images\filter.png" />
 				</Button>
 			</ToolBar>
+
+			<!--Edit form-->
 			<StackPanel Visibility="{Binding FallbackValue=Visible, Converter={StaticResource NullToVisibilityConverter}}"
 						DataContext="{Binding CurrentOrganization}">
 				<StackPanel Orientation="Horizontal"
 							Margin="0,0,0,5">
 					<Label Content="Title: "
 						   Width="80"
-						   HorizontalContentAlignment="Right"/>
-					<TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+						   HorizontalContentAlignment="Right" />
+					<TextBox x:Name="NameTextBox"
+							 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							 Width="200" />
 					<Label Content="Staff: "
 						   Width="100"
 						   HorizontalContentAlignment="Right" />
-					<TextBox Text="{Binding Staff, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+					<TextBox x:Name="StaffTextBox"
+							 Text="{Binding Staff, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							 HorizontalContentAlignment="Right"
 							 Width="125" />
 				</StackPanel>
@@ -87,12 +96,14 @@
 					<Label Content="Description: "
 						   Width="80"
 						   HorizontalContentAlignment="Right" />
-					<TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+					<TextBox x:Name="DescriptionTextBox"
+							 Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							 Width="200" />
 					<Label Content="Profit: "
 						   Width="100"
 						   HorizontalContentAlignment="Right" />
-					<TextBox Text="{Binding Profit, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+					<TextBox x:Name="ProfitTextBox"
+							 Text="{Binding Profit, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							 HorizontalContentAlignment="Right"
 							 Width="125" />
 				</StackPanel>
@@ -101,12 +112,14 @@
 					<Label Content="Tepelhone: "
 						   Width="80"
 						   HorizontalContentAlignment="Right" />
-					<TextBox Text="{Binding Telephone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+					<TextBox x:Name="TelephoneTextBox"
+							 Text="{Binding Telephone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							 Width="200" />
 					<Label Content="Total area :"
 						   Width="100"
 						   HorizontalContentAlignment="Right" />
-					<TextBox Text="{Binding TotalArea, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+					<TextBox x:Name="TotalAreaTextBox"
+							 Text="{Binding TotalArea, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							 HorizontalContentAlignment="Right"
 							 Width="125" />
 				</StackPanel>
@@ -115,7 +128,8 @@
 					<Label Content="Address: "
 						   Width="80"
 						   HorizontalContentAlignment="Right" />
-					<TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+					<TextBox x:Name="AddressTextBox"
+							 Text="{Binding Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							 Width="200"
 							 MinLines="3"
 							 MaxLines="3"
@@ -125,7 +139,8 @@
 					<Label Content=" Legal address: "
 						   Width="100"
 						   HorizontalContentAlignment="Right" />
-					<TextBox Text="{Binding LegalAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+					<TextBox x:Name="LAddressTextBox"
+							 Text="{Binding LegalAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							 Width="200"
 							 MinLines="3"
 							 MaxLines="3"

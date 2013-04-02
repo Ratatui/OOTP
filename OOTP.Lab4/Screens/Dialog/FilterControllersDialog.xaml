@@ -1,7 +1,7 @@
 ﻿<Window x:Class="OOTP.Lab4.Screens.FilterControllersDialog"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		Title="FilterOrganizationsDialog"
+		Title="Filter Controllers Dialog"
 		Height="130"
 		Width="330">
 	<Grid>

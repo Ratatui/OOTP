@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace OOTP.Lab4.Data
 {
+	/// <summary>
+	/// Agreement information
+	/// Inplementation IDataErrorInfo
+	/// </summary>
 	public partial class Agreement : IDataErrorInfo
 	{
 		#region Constructors
@@ -64,6 +64,5 @@ namespace OOTP.Lab4.Data
 		}
 
 		#endregion // IDataErrorInfo members
-		
 	}
 }

@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace OOTP.Lab4.Data
 {
+	/// <summary>
+	/// Buyer information
+	/// Inplementation IDataErrorInfo
+	/// </summary>
 	public partial class Buyer : IDataErrorInfo
 	{
 		#region Consctructors

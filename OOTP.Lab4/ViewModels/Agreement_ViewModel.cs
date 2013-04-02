@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace OOTP.Lab4.ViewModels
 {
+	/// <summary>
+	/// Agreement Screen View Model
+	/// </summary>
 	public class Agreement_ViewModel : BasicViewModel
 	{
 		#region Fields
@@ -250,7 +253,6 @@ namespace OOTP.Lab4.ViewModels
 					}
 					uow.SaveChanges();
 				}
-				
 			}
 		}
 

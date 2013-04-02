@@ -1,12 +1,15 @@
 ﻿using OOTP.Lab4.Data;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Linq;
 using OOTP.Lab4.Screens;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace OOTP.Lab4.ViewModels
 {
+	/// <summary>
+	/// Organization Screen View Model
+	/// </summary>
 	public class Organization_ViewModel : BasicViewModel
 	{
 		#region Fields
@@ -40,6 +43,7 @@ namespace OOTP.Lab4.ViewModels
 						currentOrganization.CancelEdit();
 				}
 				currentOrganization = value;
+				currentOrganization.BeginEdit();
 				this.RaisePropertyChanged("CurrentOrganization");
 			}
 		}
@@ -129,9 +133,9 @@ namespace OOTP.Lab4.ViewModels
 
 		private void OnSaveCommand()
 		{
-			this.currentOrganization.EndEdit();
 			using (var uow = context.CreateUnitOfWork())
 			{
+				this.currentOrganization.EndEdit();
 				if (CurrentOrganization.EntityState == Mindscape.LightSpeed.EntityState.New)
 				{
 					uow.Add(CurrentOrganization);

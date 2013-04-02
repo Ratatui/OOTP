@@ -19,6 +19,5 @@
 				<Frame Source="/Screens/ControllerPage.xaml" />
 			</TabItem>
 		</TabControl>
-
 	</Grid>
 </Window>

@@ -19,7 +19,10 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="200" />
 		</Grid.RowDefinitions>
-		<DataGrid Grid.Row="0"
+		
+		<!--Agreement table-->
+		<DataGrid x:Name="AgreementDataGrid"
+				  Grid.Row="0"
 				  ItemsSource="{Binding Agreements}"
 				  SelectedItem="{Binding CurrentAgreement}"
 				  AutoGenerateColumns="False"
@@ -46,7 +49,10 @@
 			</DataGrid.Columns>
 		</DataGrid>
 		<StackPanel Grid.Row="1">
-			<ToolBar Height="32">
+			
+			<!--ToolBar-->
+			<ToolBar x:Name="AgreemantToolbar"
+					 Height="32">
 				<Button ToolTip="Add new agreement"
 						Command="{Binding CreateCommand}">
 					<Image Source="Images\new.png" />
@@ -68,6 +74,8 @@
 					<Image Source="Images\filter.png" />
 				</Button>
 			</ToolBar>
+			
+			<!--Edit form-->
 			<StackPanel DataContext="{Binding CurrentAgreement}"
 						Visibility="{Binding FallbackValue=Collapsed, Converter={StaticResource NullToVisibilityConverter}}">
 				<StackPanel Orientation="Horizontal"
@@ -75,7 +83,8 @@
 					<Label Content="Number: "
 						   HorizontalContentAlignment="Right"
 						   Width="85" />
-					<TextBox Text="{Binding Number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+					<TextBox x:Name="NumbertextBox"
+							 Text="{Binding Number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							 Width="150" />
 				</StackPanel>
 				<StackPanel Orientation="Horizontal"
@@ -83,7 +92,8 @@
 					<Label Content="Date: "
 						   HorizontalContentAlignment="Right"
 						   Width="85" />
-					<DatePicker SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+					<DatePicker x:Name="DateDatePiker"
+								SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 								Width="150" />
 				</StackPanel>
 				<StackPanel Orientation="Horizontal"
@@ -91,7 +101,8 @@
 					<Label Content="Organization: "
 						   HorizontalContentAlignment="Right"
 						   Width="85" />
-					<ComboBox ItemsSource="{Binding Organizations, Source={StaticResource ViewModel}}"
+					<ComboBox x:Name="OrganizationComboBox"
+							  ItemsSource="{Binding Organizations, Source={StaticResource ViewModel}}"
 							  SelectedValuePath="Id"
 							  SelectedValue="{Binding OrganizationId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							  DisplayMemberPath="Name"
@@ -102,7 +113,8 @@
 					<Label Content="Buyer: "
 						   HorizontalContentAlignment="Right"
 						   Width="85" />
-					<ComboBox ItemsSource="{Binding Buyers, Source={StaticResource ViewModel}}"
+					<ComboBox x:Name="BuyerComboBox"
+							  ItemsSource="{Binding Buyers, Source={StaticResource ViewModel}}"
 							  SelectedValuePath="Id"
 							  SelectedValue="{Binding BuyerId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							  DisplayMemberPath="Passport"
@@ -113,7 +125,8 @@
 					<Label Content="Controller: "
 						   HorizontalContentAlignment="Right"
 						   Width="85" />
-					<ComboBox ItemsSource="{Binding Controllers, Source={StaticResource ViewModel}}"
+					<ComboBox x:Name="ControllerComboBox"
+							  ItemsSource="{Binding Controllers, Source={StaticResource ViewModel}}"
 							  SelectedValuePath="Id"
 							  SelectedValue="{Binding ControllerId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							  DisplayMemberPath="Name"

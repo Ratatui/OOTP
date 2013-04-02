@@ -1,16 +1,15 @@
 ﻿using OOTP.Lab4.Data;
 using OOTP.Lab4.Screens;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace OOTP.Lab4.ViewModels
 {
+	/// <summary>
+	/// Buyer Screen View Model
+	/// </summary>
 	public class Buyer_ViewModel : BasicViewModel
 	{
 		#region Fields
@@ -44,6 +43,7 @@ namespace OOTP.Lab4.ViewModels
 						currentBuyer.CancelEdit();
 				}
 				currentBuyer = value;
+				currentBuyer.BeginEdit();
 				this.RaisePropertyChanged("CurrentBuyer");
 			}
 		}
@@ -151,9 +151,9 @@ namespace OOTP.Lab4.ViewModels
 
 		private void OnSaveCommand()
 		{
-			this.currentBuyer.EndEdit();
 			using (var uow = context.CreateUnitOfWork())
 			{
+				this.currentBuyer.EndEdit();
 				if (CurrentBuyer.EntityState == Mindscape.LightSpeed.EntityState.New)
 				{
 					uow.Add(CurrentBuyer);

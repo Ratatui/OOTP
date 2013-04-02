@@ -19,7 +19,9 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="200" />
 		</Grid.RowDefinitions>
-		<DataGrid x:Name="ControllersGrid"
+
+		<!--Controller table-->
+		<DataGrid x:Name="ControllerGrid"
 				  Grid.Row="0"
 				  ItemsSource="{Binding Controllers}"
 				  SelectedItem="{Binding CurrentController, Mode=OneWayToSource}"
@@ -39,6 +41,8 @@
 
 		<StackPanel Grid.Row="1"
 					DataContext="{Binding CurrentController}">
+
+			<!--ToolBar-->
 			<ToolBar Height="32">
 				<Button ToolTip="Add new controller"
 						Command="{Binding CreateCommand, Source={StaticResource ViewModel}}">
@@ -61,6 +65,8 @@
 					<Image Source="Images/filter.png" />
 				</Button>
 			</ToolBar>
+
+			<!--Edit form-->
 			<StackPanel Visibility="{Binding FallbackValue=Visible, Path=CurrentController, Converter={StaticResource NullToVisibilityConverter}, Source={StaticResource ViewModel}}">
 				<StackPanel Orientation="Horizontal"
 							Height="Auto"
@@ -68,7 +74,8 @@
 					<Label Content="Name: "
 						   HorizontalContentAlignment="Right"
 						   Width="70" />
-					<TextBox Width="250"
+					<TextBox x:Name="NameTextBox"
+							 Width="250"
 							 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 				</StackPanel>
 				<StackPanel Orientation="Horizontal"
@@ -77,7 +84,8 @@
 					<Label Content="License: "
 						   HorizontalContentAlignment="Right"
 						   Width="70" />
-					<TextBox Width="250"
+					<TextBox x:Name="LicenseTextBox"
+							 Width="250"
 							 Text="{Binding License, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 				</StackPanel>
 				<StackPanel Orientation="Horizontal"
@@ -86,7 +94,8 @@
 					<Label Content="Address: "
 						   HorizontalContentAlignment="Right"
 						   Width="70" />
-					<TextBox Width="250"
+					<TextBox x:Name="AddressTextBox"
+							 Width="250"
 							 Text="{Binding Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 							 MinLines="3"
 							 MaxLines="3"
@@ -100,7 +109,8 @@
 					<Label Content="Telephone: "
 						   HorizontalContentAlignment="Right"
 						   Width="70" />
-					<TextBox Width="250"
+					<TextBox x:Name="TelephoneTextBox"
+							 Width="250"
 							 Text="{Binding Telephone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 				</StackPanel>
 			</StackPanel>

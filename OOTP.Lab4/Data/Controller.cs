@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace OOTP.Lab4.Data
 {
+	/// <summary>
+	/// Controller information
+	/// Inplementation IDataErrorInfo
+	/// </summary>
 	public partial class Controller : IDataErrorInfo
 	{
 		#region Constructors
