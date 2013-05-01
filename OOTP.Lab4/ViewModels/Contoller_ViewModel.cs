@@ -44,7 +44,8 @@ namespace OOTP.Lab4.ViewModels
 						currentController.CancelEdit();
 				}
 				this.currentController = value;
-				currentController.BeginEdit();
+				if (currentController != null)
+                    this.currentController.BeginEdit();
 				this.RaisePropertyChanged("CurrentController");
 			}
 		}

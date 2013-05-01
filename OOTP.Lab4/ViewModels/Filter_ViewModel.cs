@@ -20,6 +20,7 @@ namespace OOTP.Lab4.ViewModels
 		public double? ProfitMin { get; set; }
 		public DateTime? DateStart { get; set; }
 		public DateTime? DateEnd { get; set; }
+        public bool IsOR { get; set; }
 
 		public void Clear()
 		{
@@ -36,6 +37,7 @@ namespace OOTP.Lab4.ViewModels
 			this.ProfitMin = null;
 			this.StaffMax = null;
 			this.StaffMin = null;
+            this.IsOR = false;
 		}
 	}
 }

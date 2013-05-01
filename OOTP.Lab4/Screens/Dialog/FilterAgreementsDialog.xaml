@@ -4,143 +4,154 @@
 		Title="Filter Agreements Dialog"
 		Height="290"
 		Width="340">
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<StackPanel Grid.Row="0">
-			<StackPanel Orientation="Horizontal"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal"
 						Margin="0,5,0,5">
-				<Label Content="Number: "
+                <Label Content="Number: "
 					   HorizontalContentAlignment="Right"
 					   Width="70" />
-				<TextBox x:Name="NumbertextBox"
+                <TextBox x:Name="NumbertextBox"
 						 Text="{Binding Number}"
 						 ToolTip="Number"
-						 Width="100" />
-				<Label Content="Title: "
+						 Width="100"/>
+                <Label Content="Title: "
 					   HorizontalContentAlignment="Right"
 					   Width="40" />
-				<TextBox x:Name="TitleTextBox"
+                <TextBox x:Name="TitleTextBox"
 						 Text="{Binding Name}"
 						 ToolTip="Title"
-						 Width="100" />
-			</StackPanel>
-			<StackPanel Orientation="Horizontal"
+						 Width="100"
+                         IsReadOnly="{Binding IsOR}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
 						Margin="0,0,0,5">
-				<Label Content="Date: "
+                <Label Content="Date: "
 					   HorizontalContentAlignment="Right"
 					   Width="70" />
-				<DatePicker x:Name="StartDateDatePicker"
+                <DatePicker x:Name="StartDateDatePicker"
 							Width="100"
 							SelectedDate="{Binding DateStart}" />
-				<Label Content="-"
+                <Label Content="-"
 					   Width="40"
 					   HorizontalContentAlignment="Center" />
-				<DatePicker  x:Name="EndDateDatePicker"
+                <DatePicker  x:Name="EndDateDatePicker"
 							 SelectedDate="{Binding DateEnd}"
 							 Width="100" />
-			</StackPanel>
-			<StackPanel Orientation="Horizontal"
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
 						Margin="0,0,0,5">
-				<Label Content="Passport: "
+                <Label Content="Passport: "
 					   HorizontalContentAlignment="Right"
-					   Width="70" />
-				<TextBox x:Name="PassportTextBox"
+					   Width="70"
+                       />
+                <TextBox x:Name="PassportTextBox"
 						 Text="{Binding Passport}"
 						 ToolTip="Passport"
-						 Width="100" />
-				<Label Content="Inn: "
+						 Width="100"
+                         IsReadOnly="{Binding IsOR}"/>
+                <Label Content="Inn: "
 					   HorizontalContentAlignment="Right"
 					   Width="40" />
-				<TextBox x:Name="InnTextBox"
+                <TextBox x:Name="InnTextBox"
 						 Text="{Binding Inn}"
 						 ToolTip="Inn"
-						 Width="100" />
-			</StackPanel>
-			<StackPanel Orientation="Horizontal"
+						 Width="100" 
+                         IsReadOnly="{Binding IsOR}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
 						Margin="0,0,0,5">
-				<Label Content="Controller: "
+                <Label Content="Controller: "
 					   HorizontalContentAlignment="Right"
 					   Width="70" />
-				<ComboBox x:Name="ControllerComboBox"
+                <ComboBox x:Name="ControllerComboBox"
 						  ItemsSource="{Binding Path=ExternalViewModel.Controllers}"
 						  DisplayMemberPath="Name"
 						  SelectedValuePath="Id"
 						  SelectedValue="{Binding Controller}"
-						  Width="240" />
-			</StackPanel>
-			<StackPanel Orientation="Horizontal"
+						  Width="240" 
+                          IsReadOnly="{Binding IsOR}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
 						Margin="0,0,0,5">
-				<Label Content="Total area: "
+                <Label Content="Total area: "
 					   HorizontalContentAlignment="Right"
 					   Width="70" />
-				<TextBox x:Name="MinAreaTextBox"
+                <TextBox x:Name="MinAreaTextBox"
 						 Text="{Binding AreaMin}"
 						 ToolTip="MinArea"
 						 Width="100" />
-				<Label Content="-"
+                <Label Content="-"
 					   Width="40"
 					   HorizontalContentAlignment="Center" />
-				<TextBox x:Name="MaxAreaTextBox"
+                <TextBox x:Name="MaxAreaTextBox"
 						 Text="{Binding AreaMax}"
 						 ToolTip="MaxArea"
 						 Width="100" />
-			</StackPanel>
-			<StackPanel Orientation="Horizontal"
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
 						Margin="0,0,0,5">
-				<Label Content="Staff: "
+                <Label Content="Staff: "
 					   HorizontalContentAlignment="Right"
 					   Width="70" />
-				<TextBox x:Name="MinStaffTextBox"
+                <TextBox x:Name="MinStaffTextBox"
 						 Text="{Binding StaffMax}"
 						 ToolTip="MinStaff"
 						 Width="100" />
-				<Label Content="-"
+                <Label Content="-"
 					   Width="40"
 					   HorizontalContentAlignment="Center" />
-				<TextBox x:Name="MaxStaffTextBox"
+                <TextBox x:Name="MaxStaffTextBox"
 						 Text="{Binding StaffMin}"
 						 ToolTip="MaxStaff"
 						 Width="100" />
-			</StackPanel>
-			<StackPanel Orientation="Horizontal"
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
 						Margin="0,0,0,5">
-				<Label Content="Profit: "
+                <Label Content="Profit: "
 					   HorizontalContentAlignment="Right"
-					   Width="70" />
-				<TextBox x:Name="MinProfitTextBox"
+					   Width="70"/>
+                <TextBox x:Name="MinProfitTextBox"
 						 Text="{Binding ProfitMin}"
 						 ToolTip="MinProfit"
-						 Width="100" />
-				<Label Content="-"
+						 Width="100" 
+                         IsReadOnly="{Binding IsOR}"/>
+                <Label Content="-"
 					   Width="40"
 					   HorizontalContentAlignment="Center" />
-				<TextBox x:Name="MaxProfitTextBox"
+                <TextBox x:Name="MaxProfitTextBox"
 						 Text="{Binding ProfitMax}"
 						 ToolTip="MaxProfit"
-						 Width="100" />
-			</StackPanel>
-		</StackPanel>
-		<StackPanel Grid.Row="1"
+						 Width="100" 
+                         IsReadOnly="{Binding IsOR}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
 					Orientation="Horizontal"
 					HorizontalAlignment="Right">
-			<Button x:Name="OkButton"
+            <CheckBox Content="OR logic"
+                      Margin="0,0,5,0"
+                      IsChecked="{Binding IsOR, Mode=TwoWay}"/>
+            <Button x:Name="OkButton"
 					Content="OK"
 					Click="OkButton_Click"
 					Width="70"
 					Margin="0,0,5,0" />
-			<Button x:Name="ClearButton"
+            <Button x:Name="ClearButton"
 					Content="Clear"
 					Click="CancelButton_Click"
 					Width="70"
 					Margin="0,0,5,0" />
-			<Button x:Name="CancelButton"
+            <Button x:Name="CancelButton"
 					Content="Cancel"
 					IsCancel="True"
 					Width="70"
 					Margin="0,0,5,0" />
-		</StackPanel>
-	</Grid>
+        </StackPanel>
+    </Grid>
 </Window>

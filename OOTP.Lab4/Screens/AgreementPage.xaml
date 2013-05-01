@@ -6,6 +6,7 @@
 	  xmlns:viewModel="clr-namespace:OOTP.Lab4.ViewModels"
 	  xmlns:converter="clr-namespace:OOTP.Lab4.Converters"
 	  mc:Ignorable="d"
+      Background="{x:Null}"
 	  d:DesignHeight="300"
 	  d:DesignWidth="300">
 	<Page.Resources>
@@ -13,7 +14,7 @@
 		<converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 	</Page.Resources>
 	<Grid x:Name="LayoutRoot"
-		  Background="White"
+		  Background="{x:Null}"
 		  DataContext="{StaticResource ViewModel}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
