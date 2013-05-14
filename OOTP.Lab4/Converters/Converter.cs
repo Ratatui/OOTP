@@ -19,4 +19,17 @@ namespace OOTP.Lab4.Converters
 			throw new NotImplementedException();
 		}
 	}
+
+	class InvertedBooleanConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			return (value as bool?) == true ? false : true;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

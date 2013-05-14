@@ -267,65 +267,58 @@ namespace OOTP.Lab4.ViewModels
 				{
 					using (var uow = context.CreateUnitOfWork())
 					{
-                        if (filterViewModel.IsOR)
-                        {
-                            var query = from agreement in uow.Agreements
-                                        join organization in uow.Organizations
-                                        on agreement.OrganizationId equals organization.Id
-                                        join buyer in uow.Buyers
-                                        on agreement.BuyerId equals buyer.Id
-                                        join controller in uow.Controllers
-                                        on agreement.ControllerId equals controller.Id
-                                        where agreement.Number.Contains(filterViewModel.Number ?? "")
-                                            || agreement.Date >= (filterViewModel.DateStart ?? agreement.Date)
-                                            && agreement.Date <= (filterViewModel.DateEnd ?? agreement.Date)
-                                            || organization.Name.Contains(filterViewModel.Name ?? "")
-                                            || organization.Profit >= (filterViewModel.ProfitMin ?? organization.Profit)
-                                            && organization.Profit <= (filterViewModel.ProfitMax ?? organization.Profit)
-                                            || organization.TotalArea >= (filterViewModel.AreaMin ?? organization.TotalArea)
-                                            && organization.TotalArea <= (filterViewModel.AreaMax ?? organization.TotalArea)
-                                            || organization.Staff >= (filterViewModel.StaffMin ?? organization.Staff)
-                                            && organization.Staff <= (filterViewModel.StaffMax ?? organization.Staff)
-                                            || buyer.Passport.Contains(filterViewModel.Passport ?? "")
-                                            || buyer.Inn.Contains(filterViewModel.Inn ?? "")
-                                            || controller.Id == (filterViewModel.Controller ?? controller.Id)
-                                        select agreement;
-                            this.Organizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == false).OrderBy(s => s.Name));
-                            this.PrivatizedOrganizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == true));
-                            this.Controllers = new ObservableCollection<Controller>(uow.Controllers.OrderBy(s => s.Name));
-                            this.Buyers = new ObservableCollection<Buyer>(uow.Buyers.OrderBy(s => s.Passport));
-                            this.Agreements = new ObservableCollection<Agreement>(query);
+						if (filterViewModel.IsOR)
+						{
+							var query = from agreement in uow.Agreements
+										join organization in uow.Organizations
+										on agreement.OrganizationId equals organization.Id
+										join buyer in uow.Buyers
+										on agreement.BuyerId equals buyer.Id
+										join controller in uow.Controllers
+										on agreement.ControllerId equals controller.Id
+										where organization.Profit >= (filterViewModel.ProfitMin ?? organization.Profit)
+										&& organization.Profit <= (filterViewModel.ProfitMax ?? organization.Profit)
+										|| organization.TotalArea >= (filterViewModel.AreaMin ?? organization.TotalArea)
+										&& organization.TotalArea <= (filterViewModel.AreaMax ?? organization.TotalArea)
+										|| organization.Staff >= (filterViewModel.StaffMin ?? organization.Staff)
+										&& organization.Staff <= (filterViewModel.StaffMax ?? organization.Staff)
+										select agreement;
+							this.Organizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == false).OrderBy(s => s.Name));
+							this.PrivatizedOrganizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == true));
+							this.Controllers = new ObservableCollection<Controller>(uow.Controllers.OrderBy(s => s.Name));
+							this.Buyers = new ObservableCollection<Buyer>(uow.Buyers.OrderBy(s => s.Passport));
+							this.Agreements = new ObservableCollection<Agreement>(query);
 
-                        }
-                        else
-                        {
-                            var query = from agreement in uow.Agreements
-                                        join organization in uow.Organizations
-                                        on agreement.OrganizationId equals organization.Id
-                                        join buyer in uow.Buyers
-                                        on agreement.BuyerId equals buyer.Id
-                                        join controller in uow.Controllers
-                                        on agreement.ControllerId equals controller.Id
-                                        where agreement.Number.Contains(filterViewModel.Number ?? "")
-                                            && agreement.Date >= (filterViewModel.DateStart ?? agreement.Date)
-                                            && agreement.Date <= (filterViewModel.DateEnd ?? agreement.Date)
-                                            && organization.Name.Contains(filterViewModel.Name ?? "")
-                                            && organization.Profit >= (filterViewModel.ProfitMin ?? organization.Profit)
-                                            && organization.Profit <= (filterViewModel.ProfitMax ?? organization.Profit)
-                                            && organization.TotalArea >= (filterViewModel.AreaMin ?? organization.TotalArea)
-                                            && organization.TotalArea <= (filterViewModel.AreaMax ?? organization.TotalArea)
-                                            && organization.Staff >= (filterViewModel.StaffMin ?? organization.Staff)
-                                            && organization.Staff <= (filterViewModel.StaffMax ?? organization.Staff)
-                                            && buyer.Passport.Contains(filterViewModel.Passport ?? "")
-                                            && buyer.Inn.Contains(filterViewModel.Inn ?? "")
-                                            && controller.Id == (filterViewModel.Controller ?? controller.Id)
-                                        select agreement;
-                            this.Organizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == false).OrderBy(s => s.Name));
-                            this.PrivatizedOrganizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == true));
-                            this.Controllers = new ObservableCollection<Controller>(uow.Controllers.OrderBy(s => s.Name));
-                            this.Buyers = new ObservableCollection<Buyer>(uow.Buyers.OrderBy(s => s.Passport));
-                            this.Agreements = new ObservableCollection<Agreement>(query);
-                        }              
+						}
+						else
+						{
+							var query = from agreement in uow.Agreements
+										join organization in uow.Organizations
+										on agreement.OrganizationId equals organization.Id
+										join buyer in uow.Buyers
+										on agreement.BuyerId equals buyer.Id
+										join controller in uow.Controllers
+										on agreement.ControllerId equals controller.Id
+										where agreement.Number.Contains(filterViewModel.Number ?? "")
+											&& agreement.Date >= (filterViewModel.DateStart ?? agreement.Date)
+											&& agreement.Date <= (filterViewModel.DateEnd ?? agreement.Date)
+											&& organization.Name.Contains(filterViewModel.Name ?? "")
+											&& organization.Profit >= (filterViewModel.ProfitMin ?? organization.Profit)
+											&& organization.Profit <= (filterViewModel.ProfitMax ?? organization.Profit)
+											&& organization.TotalArea >= (filterViewModel.AreaMin ?? organization.TotalArea)
+											&& organization.TotalArea <= (filterViewModel.AreaMax ?? organization.TotalArea)
+											&& organization.Staff >= (filterViewModel.StaffMin ?? organization.Staff)
+											&& organization.Staff <= (filterViewModel.StaffMax ?? organization.Staff)
+											&& buyer.Passport.Contains(filterViewModel.Passport ?? "")
+											&& buyer.Inn.Contains(filterViewModel.Inn ?? "")
+											&& controller.Id == (filterViewModel.Controller ?? controller.Id)
+										select agreement;
+							this.Organizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == false).OrderBy(s => s.Name));
+							this.PrivatizedOrganizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == true));
+							this.Controllers = new ObservableCollection<Controller>(uow.Controllers.OrderBy(s => s.Name));
+							this.Buyers = new ObservableCollection<Buyer>(uow.Buyers.OrderBy(s => s.Passport));
+							this.Agreements = new ObservableCollection<Agreement>(query);
+						}
 					}
 				}
 			};
