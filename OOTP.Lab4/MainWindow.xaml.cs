@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOTP.Lab4.Screens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,17 @@ namespace OOTP.Lab4
 		public MainWindow()
 		{
 			InitializeComponent();
+		}
+
+		private void About_Click(object sender, RoutedEventArgs e)
+		{
+			var wnd = new AboutWindow();
+			wnd.Show();
+		}
+
+		private void Exit_Click(object sender, RoutedEventArgs e)
+		{
+			Application.Current.Shutdown();
 		}
 	}
 }

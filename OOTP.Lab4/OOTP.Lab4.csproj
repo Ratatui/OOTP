@@ -91,6 +91,9 @@
       <DependentUpon>Model.lsmodel</DependentUpon>
     </Compile>
     <Compile Include="Data\Organization.cs" />
+    <Compile Include="Screens\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Screens\AgreementPage.xaml.cs">
       <DependentUpon>AgreementPage.xaml</DependentUpon>
     </Compile>
@@ -134,6 +137,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Screens\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Screens\AgreementPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -250,6 +257,10 @@
   </ItemGroup>
   <ItemGroup>
     <SplashScreen Include="SplashScreenOOTP.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Screens\Images\Untitled.png" />
+    <Resource Include="Screens\Images\Untitled2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

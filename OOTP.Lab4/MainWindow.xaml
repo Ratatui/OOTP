@@ -4,56 +4,95 @@
 		Title="Frolov Stanislav - Lab #4"
 		Height="600"
 		Width="800"
-        UseLayoutRounding="False" Background="{x:Null}" AllowsTransparency="True" WindowStyle="None">
-    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10">
-        <Border.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="LightGray"  Offset="1"/>
-                <GradientStop Color="White"/>
-            </LinearGradientBrush>
-        </Border.Background>
-        <Grid Margin="5,5,5,5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" x:Name="TextBlock_Title" Height="36" TextWrapping="Wrap" VerticalAlignment="Top" Margin="8,0,0,0" FontFamily="Showcard Gothic" FontSize="24" HorizontalAlignment="Left" Width="275" Text="Frolov Lab #4"/>
-            <Button Content="Button" HorizontalAlignment="Right" Height="28" Margin="0,8,8,0" VerticalAlignment="Top" Width="58" FontFamily="Tempus Sans ITC">
-                <Button.Effect>
-                    <DropShadowEffect BlurRadius="13"/>
-                </Button.Effect>
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="Black" Offset="1"/>
-                        <GradientStop Color="White" Offset="0.672"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
-            <Button Content="Button" HorizontalAlignment="Right" Height="28" Margin="0,8,70,0" VerticalAlignment="Top" Width="58" FontFamily="Tempus Sans ITC">
-                <Button.Effect>
-                    <DropShadowEffect BlurRadius="13"/>
-                </Button.Effect>
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="Black" Offset="1"/>
-                        <GradientStop Color="White" Offset="0.672"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
-            <TabControl Background="{x:Null}" BorderThickness="0" Grid.Row="1">
-                <TabItem Header="Agreements">
-                    <Frame Source="/Screens/AgreementPage.xaml" />
-                </TabItem>
-                <TabItem Header="Organizations">
-                    <Frame Source="/Screens/OrganizationPage.xaml" />
-                </TabItem>
-                <TabItem Header="Buyers">
-                    <Frame Source="/Screens/BuyerPage.xaml" />
-                </TabItem>
-                <TabItem Header="Controllers">
-                    <Frame Source="/Screens/ControllerPage.xaml" />
-                </TabItem>
-            </TabControl>
-        </Grid>
-    </Border>
+		UseLayoutRounding="False"
+		Background="{x:Null}"
+		AllowsTransparency="True"
+		WindowStyle="None">
+	<Border BorderBrush="Black"
+			BorderThickness="1"
+			CornerRadius="10">
+		<Border.Background>
+			<LinearGradientBrush EndPoint="0.5,1"
+								 StartPoint="0.5,0">
+				<GradientStop Color="LightGray"
+							  Offset="1" />
+				<GradientStop Color="White" />
+			</LinearGradientBrush>
+		</Border.Background>
+		<Grid Margin="5,5,5,5">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<TextBlock Grid.Row="0"
+					   x:Name="TextBlock_Title"
+					   Height="36"
+					   TextWrapping="Wrap"
+					   VerticalAlignment="Top"
+					   Margin="8,0,0,0"
+					   FontFamily="Showcard Gothic"
+					   FontSize="24"
+					   HorizontalAlignment="Left"
+					   Width="275"
+					   Text="Frolov Lab #4" />
+			<Button Content="About"
+					HorizontalAlignment="Right"
+					Height="28"
+					Margin="0,8,70,0"
+					VerticalAlignment="Top"
+					Width="58"
+					Click="About_Click"
+					FontFamily="Tempus Sans ITC">
+				<Button.Effect>
+					<DropShadowEffect BlurRadius="13" />
+				</Button.Effect>
+				<Button.Background>
+					<LinearGradientBrush EndPoint="0.5,1"
+										 StartPoint="0.5,0">
+						<GradientStop Color="Black"
+									  Offset="1" />
+						<GradientStop Color="White"
+									  Offset="0.672" />
+					</LinearGradientBrush>
+				</Button.Background>
+			</Button>
+			<Button Content="Exit"
+					HorizontalAlignment="Right"
+					Height="28"
+					Margin="0,8,8,0"
+					VerticalAlignment="Top"
+					Width="58"
+					Click="Exit_Click"
+					FontFamily="Tempus Sans ITC">
+				<Button.Effect>
+					<DropShadowEffect BlurRadius="13" />
+				</Button.Effect>
+				<Button.Background>
+					<LinearGradientBrush EndPoint="0.5,1"
+										 StartPoint="0.5,0">
+						<GradientStop Color="Black"
+									  Offset="1" />
+						<GradientStop Color="White"
+									  Offset="0.672" />
+					</LinearGradientBrush>
+				</Button.Background>
+			</Button>
+			<TabControl Background="{x:Null}"
+						BorderThickness="0"
+						Grid.Row="1">
+				<TabItem Header="Agreements">
+					<Frame Source="/Screens/AgreementPage.xaml" />
+				</TabItem>
+				<TabItem Header="Organizations">
+					<Frame Source="/Screens/OrganizationPage.xaml" />
+				</TabItem>
+				<TabItem Header="Buyers">
+					<Frame Source="/Screens/BuyerPage.xaml" />
+				</TabItem>
+				<TabItem Header="Controllers">
+					<Frame Source="/Screens/ControllerPage.xaml" />
+				</TabItem>
+			</TabControl>
+		</Grid>
+	</Border>
 </Window>
