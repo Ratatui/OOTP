@@ -12,7 +12,7 @@ namespace OOTP.Lab4.ViewModels
 		/// <summary>
 		/// Property for connect DataBase with LightSpeed
 		/// </summary>
-		protected static LightSpeedContext<ModelUnitOfWork> context = new LightSpeedContext<ModelUnitOfWork>("Default");
+		protected static Client context = new Client("127.0.0.1");
 
 		/// <summary>
 		/// Event Property Changed

@@ -160,35 +160,12 @@ namespace OOTP.Lab4.ViewModels
 		public Agreement_ViewModel()
 		{
 			this.filterViewModel = new Filter_ViewModel();
-			using (var uow = context.CreateUnitOfWork())
-			{
-				this.Organizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == false).OrderBy(s => s.Name));
-				this.PrivatizedOrganizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == true));
-				this.Controllers = new ObservableCollection<Controller>(uow.Controllers.OrderBy(s => s.Name));
-				this.Buyers = new ObservableCollection<Buyer>(uow.Buyers.OrderBy(s => s.Passport));
-				this.Agreements = new ObservableCollection<Agreement>(uow.Agreements.OrderBy(s => s.Number));
 
-				#region Fake Data
-				//Random rand = new Random();
-
-				//for (int i = 0; i < 30; i++)
-				//{
-				//	var obj = new Organization()
-				//	{
-				//		Address = "г Донецк Артема "+rand.Next(1,300).ToString()+"/"+rand.Next(1,100).ToString(),
-				//		Description = "Description organization #"+i.ToString(),
-				//		LegalAddress = "г Донецк Артема " + rand.Next(1, 300).ToString() + "/" + rand.Next(1, 100).ToString(),
-				//		Name = "Organization #" + i.ToString(),
-				//		Profit = rand.Next(0,100000),
-				//		Staff = rand.Next(0, 1000),
-				//		Telephone = "+38(062)" + rand.Next(100, 999).ToString() + "-" + rand.Next(10, 99).ToString() + "-" + rand.Next(10, 99).ToString(),
-				//		TotalArea = rand.Next(100,10000)
-				//	};
-				//	uow.Add(obj);
-				//	uow.SaveChanges();
-				//}
-				#endregion // Fake Data
-			}
+			this.Organizations = new ObservableCollection<Organization>(context.Organizations);
+			this.PrivatizedOrganizations = new ObservableCollection<Organization>(context.Organizations);
+			this.Controllers = new ObservableCollection<Controller>(context.Controllers);
+			this.Buyers = new ObservableCollection<Buyer>(context.Buyers);
+			this.Agreements = new ObservableCollection<Agreement>(context.Agreements);
 		}
 
 		#endregion
@@ -197,47 +174,44 @@ namespace OOTP.Lab4.ViewModels
 
 		private void OnCreateCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
-			{
-				var newAgreement = new Agreement();
-				this.Agreements.Add(newAgreement);
-				this.CurrentAgreement = newAgreement;
-			}
+			var newAgreement = new Agreement();
+			this.Agreements.Add(newAgreement);
+			this.CurrentAgreement = newAgreement;
 		}
 
 		private void OnRefreshCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
-			{
-				this.Organizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == false).OrderBy(s => s.Name));
-				this.PrivatizedOrganizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == true));
-				this.Controllers = new ObservableCollection<Controller>(uow.Controllers.OrderBy(s => s.Name));
-				this.Buyers = new ObservableCollection<Buyer>(uow.Buyers.OrderBy(s => s.Passport));
-				this.Agreements = new ObservableCollection<Agreement>(uow.Agreements.OrderBy(s => s.Number));
-			}
+			//using (var uow = context.CreateUnitOfWork())
+			//{
+			//	this.Organizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == false).OrderBy(s => s.Name));
+			//	this.PrivatizedOrganizations = new ObservableCollection<Organization>(uow.Organizations.Where(s => s.IsPrivatized == true));
+			//	this.Controllers = new ObservableCollection<Controller>(uow.Controllers.OrderBy(s => s.Name));
+			//	this.Buyers = new ObservableCollection<Buyer>(uow.Buyers.OrderBy(s => s.Passport));
+			//	this.Agreements = new ObservableCollection<Agreement>(uow.Agreements.OrderBy(s => s.Number));
+			//}
 		}
 
 		private void OnDeleteCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
-			{
-				uow.Remove(CurrentAgreement);
-				this.CurrentAgreement.Organization.IsPrivatized = false;
-				this.Agreements.Remove(CurrentAgreement);
-				uow.SaveChanges();
-			}
+			//using (var uow = context.CreateUnitOfWork())
+			//{
+			//	uow.Remove(CurrentAgreement);
+			//	this.CurrentAgreement.Organization.IsPrivatized = false;
+			//	this.Agreements.Remove(CurrentAgreement);
+			//	uow.SaveChanges();
+			//}
 		}
 
 		private void OnSaveCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
+			var uow = context;
 			{
 				this.currentAgreement.EndEdit();
 				if (CurrentAgreement.EntityState == Mindscape.LightSpeed.EntityState.New)
 				{
-					uow.Add(CurrentAgreement);
-					CurrentAgreement.Organization.IsPrivatized = true;
-					uow.SaveChanges();
+					uow.AddAgreement(CurrentAgreement);
+					//CurrentAgreement.Organization.IsPrivatized = true;
+					//uow.SaveChanges();
 				}
 				else
 				{
@@ -251,7 +225,7 @@ namespace OOTP.Lab4.ViewModels
 						obj.Date = CurrentAgreement.Date;
 						obj.Organization.IsPrivatized = true;
 					}
-					uow.SaveChanges();
+					//uow.SaveChanges();
 				}
 			}
 		}
@@ -265,7 +239,7 @@ namespace OOTP.Lab4.ViewModels
 			{
 				if (wnd.DialogResult == true)
 				{
-					using (var uow = context.CreateUnitOfWork())
+					var uow = context;
 					{
 						if (filterViewModel.IsOR)
 						{

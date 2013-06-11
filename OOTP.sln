@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOTP.Lab4", "OOTP.Lab4\OOTP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Design", "Design\Design.csproj", "{E2F2A9C8-C2AA-46A2-A5A6-B5A49E7BF463}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOTP_Server", "OOTP_Server\OOTP_Server.csproj", "{3F0F8B24-1C47-4F68-BAD8-90EDE77ABD29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,16 @@ Global
 		{E2F2A9C8-C2AA-46A2-A5A6-B5A49E7BF463}.Release|x86.ActiveCfg = Release|x86
 		{E2F2A9C8-C2AA-46A2-A5A6-B5A49E7BF463}.Release|x86.Build.0 = Release|x86
 		{E2F2A9C8-C2AA-46A2-A5A6-B5A49E7BF463}.Release|x86.Deploy.0 = Release|x86
+		{3F0F8B24-1C47-4F68-BAD8-90EDE77ABD29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0F8B24-1C47-4F68-BAD8-90EDE77ABD29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0F8B24-1C47-4F68-BAD8-90EDE77ABD29}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{3F0F8B24-1C47-4F68-BAD8-90EDE77ABD29}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3F0F8B24-1C47-4F68-BAD8-90EDE77ABD29}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3F0F8B24-1C47-4F68-BAD8-90EDE77ABD29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0F8B24-1C47-4F68-BAD8-90EDE77ABD29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0F8B24-1C47-4F68-BAD8-90EDE77ABD29}.Release|ARM.ActiveCfg = Release|Any CPU
+		{3F0F8B24-1C47-4F68-BAD8-90EDE77ABD29}.Release|x64.ActiveCfg = Release|Any CPU
+		{3F0F8B24-1C47-4F68-BAD8-90EDE77ABD29}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

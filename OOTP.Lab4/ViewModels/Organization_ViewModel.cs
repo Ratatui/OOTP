@@ -55,10 +55,9 @@ namespace OOTP.Lab4.ViewModels
 		public Organization_ViewModel()
 		{
 			this.filterViewModel = new Filter_ViewModel();
-			using (var uow = context.CreateUnitOfWork())
-			{
-				this.Organizations = new ObservableCollection<Organization>(uow.Organizations);
-			}
+			
+			this.Organizations = new ObservableCollection<Organization>(context.Organizations);
+			
 		}
 
 		#endregion // Constructors
@@ -133,13 +132,13 @@ namespace OOTP.Lab4.ViewModels
 
 		private void OnSaveCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
+			var uow = context;
 			{
 				this.currentOrganization.EndEdit();
 				if (CurrentOrganization.EntityState == Mindscape.LightSpeed.EntityState.New)
 				{
-					uow.Add(CurrentOrganization);
-					uow.SaveChanges();
+					//uow.Add(CurrentOrganization);
+					//uow.SaveChanges();
 				}
 				else
 				{
@@ -154,7 +153,7 @@ namespace OOTP.Lab4.ViewModels
 						obj.TotalArea = CurrentOrganization.TotalArea;
 						obj.Profit = CurrentOrganization.Profit;
 					}
-					uow.SaveChanges();
+					//uow.SaveChanges();
 				}
 
 			}
@@ -163,20 +162,20 @@ namespace OOTP.Lab4.ViewModels
 
 		private void OnRefreshCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
-			{
-				this.Organizations = new ObservableCollection<Organization>(uow.Organizations);
-			}
+			//using (var uow = context.CreateUnitOfWork())
+			//{
+			//	this.Organizations = new ObservableCollection<Organization>(uow.Organizations);
+			//}
 		}
 
 		private void OnDeleteCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
-			{
-				uow.Remove(CurrentOrganization);
-				this.Organizations.Remove(CurrentOrganization);
-				uow.SaveChanges();
-			}
+			//using (var uow = context.CreateUnitOfWork())
+			//{
+			//	uow.Remove(CurrentOrganization);
+			//	this.Organizations.Remove(CurrentOrganization);
+			//	uow.SaveChanges();
+			//}
 		}
 
 		private void OnFilterCommand()
@@ -186,7 +185,7 @@ namespace OOTP.Lab4.ViewModels
 			wnd.ExternalOrganizationViewModel = this;
 			wnd.Closed += (s, args) =>
 				{
-					using (var uow = context.CreateUnitOfWork())
+					var uow = context;
 					{
 						var query = from organization in uow.Organizations
 									where organization.Name.Contains(filterViewModel.Name ?? "")

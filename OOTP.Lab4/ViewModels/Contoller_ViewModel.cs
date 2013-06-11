@@ -57,10 +57,9 @@ namespace OOTP.Lab4.ViewModels
 		public Controller_ViewModel()
 		{
 			this.filterViewModel = new Filter_ViewModel();
-			using (var uow = context.CreateUnitOfWork())
-			{
-				this.Controllers = new ObservableCollection<Controller>(uow.Controllers);
-			}
+			
+			this.Controllers = new ObservableCollection<Controller>(context.Controllers);
+			
 		}
 
 		#endregion // Constructors
@@ -135,31 +134,31 @@ namespace OOTP.Lab4.ViewModels
 
 		private void OnDeleteCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
-			{
-				uow.Remove(CurrentController);
-				this.Controllers.Remove(CurrentController);
-				uow.SaveChanges();
-			}
+			//using (var uow = context.CreateUnitOfWork())
+			//{
+			//	uow.Remove(CurrentController);
+			//	this.Controllers.Remove(CurrentController);
+			//	uow.SaveChanges();
+			//}
 		}
 
 		private void OnRefreshCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
-			{
-				this.Controllers = new ObservableCollection<Controller>(uow.Controllers);
-			}
+			//using (var uow = context.CreateUnitOfWork())
+			//{
+			//	this.Controllers = new ObservableCollection<Controller>(uow.Controllers);
+			//}
 		}
 
 		private void OnSaveCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
+			var uow = context;
 			{
 				this.currentController.EndEdit();
 				if (CurrentController.EntityState == Mindscape.LightSpeed.EntityState.New)
 				{
-					uow.Add(CurrentController);
-					uow.SaveChanges();
+					//uow.Add(CurrentController);
+					//uow.SaveChanges();
 				}
 				else
 				{
@@ -170,7 +169,7 @@ namespace OOTP.Lab4.ViewModels
 						obj.Telephone = CurrentController.Telephone;
 						obj.License = CurrentController.License;
 					}
-					uow.SaveChanges();
+					//uow.SaveChanges();
 				}
 			}
 		}
@@ -183,7 +182,7 @@ namespace OOTP.Lab4.ViewModels
 			wnd.ExternalViewModel = filterViewModel;
 			wnd.Closed += (sender, args) =>
 				{
-					using (var uow = context.CreateUnitOfWork())
+					var uow = context;
 					{
 						var query = from controller in uow.Controllers
 									where controller.Id == (filterViewModel.Controller ?? controller.Id)

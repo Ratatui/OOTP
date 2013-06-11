@@ -55,10 +55,9 @@ namespace OOTP.Lab4.ViewModels
 		public Buyer_ViewModel()
 		{
 			this.filterViewModel = new Filter_ViewModel();
-			using (var uow = context.CreateUnitOfWork())
-			{
-				this.Buyers = new ObservableCollection<Buyer>(uow.Buyers);
-			}
+			
+			this.Buyers = new ObservableCollection<Buyer>(context.Buyers);
+			
 		}
 
 		#endregion // Constructors
@@ -133,31 +132,31 @@ namespace OOTP.Lab4.ViewModels
 
 		private void OnRefreshCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
-			{
-				this.Buyers = new ObservableCollection<Buyer>(uow.Buyers);
-			}
+			//using (var uow = context.CreateUnitOfWork())
+			//{
+			//	this.Buyers = new ObservableCollection<Buyer>(uow.Buyers);
+			//}
 		}
 
 		private void OnDeleteCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
-			{
-				uow.Remove(CurrentBuyer);
-				this.Buyers.Remove(CurrentBuyer);
-				uow.SaveChanges();
-			}
+			//using (var uow = context.CreateUnitOfWork())
+			//{
+			//	uow.Remove(CurrentBuyer);
+			//	this.Buyers.Remove(CurrentBuyer);
+			//	uow.SaveChanges();
+			//}
 		}
 
 		private void OnSaveCommand()
 		{
-			using (var uow = context.CreateUnitOfWork())
+			var uow = context;
 			{
 				this.currentBuyer.EndEdit();
 				if (CurrentBuyer.EntityState == Mindscape.LightSpeed.EntityState.New)
 				{
-					uow.Add(CurrentBuyer);
-					uow.SaveChanges();
+					//uow.Add(CurrentBuyer);
+					//uow.SaveChanges();
 				}
 				else
 				{
@@ -172,7 +171,7 @@ namespace OOTP.Lab4.ViewModels
 						obj.BirthDay = CurrentBuyer.BirthDay;
 						obj.FirstName = CurrentBuyer.FirstName;
 					}
-					uow.SaveChanges();
+					//uow.SaveChanges();
 				}
 			}
 		}
@@ -184,7 +183,7 @@ namespace OOTP.Lab4.ViewModels
 			wnd.ExternalViewModel = filterViewModel;
 			wnd.Closed += (sender, args) =>
 			{
-				using (var uow = context.CreateUnitOfWork())
+				var uow = context;
 				{
 					var query = from buyer in uow.Buyers
 								where buyer.LastName.Contains(filterViewModel.Name ?? "")
